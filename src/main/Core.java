@@ -153,6 +153,7 @@ public class Core {
                     continue;
                 }
             }
+
             for(String Scanner2:paths2) {
                 double similar = 0;
                 if (!Scanner1.equals(Scanner2)) {
