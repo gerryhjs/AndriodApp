@@ -70,7 +70,7 @@ public class Core {
     {
         createDiagram=false;
         bySize=true;
-        System.out.println(test_compare());
+        System.out.println(test_compare2());
     }
 
     public String test_compare()
