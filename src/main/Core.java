@@ -68,8 +68,9 @@ public class Core {
     @Test
     public void test()
     {
+        createDiagram=false;
         bySize=true;
-        System.out.println(test_compare2());
+        System.out.println(test_compare());
     }
 
     public String test_compare()
@@ -99,13 +100,16 @@ public class Core {
 
     public double compare(String path0, String path1,double weight_edge) throws IOException //1-1
     {
-        int projectSize=2;
-        String[] paths=new String[projectSize];
-        paths[0]=path0;
-        paths[1]=path1;
-        Diagram[] projects=new  Diagram[projectSize];
-        for (int i=0;i<projectSize;i++)
-            projects[i]=check(paths[i]);
+        int projectSize = 2;
+        String[] paths = new String[projectSize];
+        paths[0] = path0;
+        paths[1] = path1;
+        Diagram[] projects = new Diagram[projectSize];
+        for (int i = 0; i < projectSize; i++) {
+            if (createDiagram)
+                check_draw(paths[i]);
+            projects[i] = check(paths[i]);
+        }
         return compareDiagram(projects[0],projects[1],weight_edge);
     }
     public double compare2(String path1,String path2,double weight_edge)//1-N
@@ -115,6 +119,8 @@ public class Core {
         if (paths==null) return 0;
         for(String Scanner2:paths) {
             try {
+                if (createDiagram)
+                    check_draw(Scanner2);
                 similar = Math.max(compare(path1, Scanner2, weight_edge),similar);
             } catch (IOException ignored) {
 
