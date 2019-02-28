@@ -1,0 +1,40 @@
+<component name="libraryTable">
+  <library name="spring_lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-webmvc-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/aspectjweaver.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/mybatis-3.2.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-beans-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-test-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-jdbc-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-core-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-aop-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/com.springsource.org.apache.commons.logging-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/commons-logging.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/mysql-connector-java-5.1.12-bin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-build-src-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-orm-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-webmvc-portlet-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-jms-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/Standard.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-oxm-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/c3p0-0.9.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-expression-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-framework-bom-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/Jstl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/junit-4.8.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/aopalliance-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-instrument-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-tx-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-aspects-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-context-support-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-context-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-web-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/spring-instrument-tomcat-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/mybatis-spring-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/spring_lib/log4j-1.2.16.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

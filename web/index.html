@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<link rel="stylesheet" href="css/bootstrap.css" />
+<link rel="stylesheet" href="css/docs.min.css" />
+<link rel="stylesheet" href="css/table-style.css" />
+<script>
+    var mode;
+    $(document).ready(function() {
+        $("#file1").hide();
+        $("#file2").hide();
+        $("#load").hide();
+        $("#thresholds").attr("disabled",true);
+        $("#weight").attr("disabled",true);
+        $("#code").attr("disabled",true);
+    });
+    function send()
+    {
+        var s="";
+        $("#load").show();
+        $("#result").val("正在分析中...");
+        if (mode!==5)
+        {
+            s="mode:"+mode+";file1:"+$("#file1").val()+";file2:"+$("#file2").val()+
+                ";threshold:"+$("#thresholds").val()+";weight:"+$("#weight").val();
+        }
+        else
+        {
+            s=$("#code").val();
+        }
+        $.post('PostRequestServlet',{input:s},function(output,status,xhr)
+        {
+            //alert(output);
+            $("#result").val(output);
+            $("#load").hide();
+        });
+    }
+    function check()
+    {
+
+    }
+    function mode0() {
+        mode = 0;
+        send();
+        $("#file1").show();
+        $("#file2").show();
+        $("#thresholds").hide();
+        $("#weight").hide();
+        $("#thresholds").show();
+        $("#weight").show();
+        $("#label1").show();
+        $("#label2").show();
+        $("#thresholds").attr("disabled",true);
+        $("#thresholds").val("Na");
+        $("#weight").attr("disabled",false);
+        $("#weight").val(1);
+        $("#code").attr("disabled",true);
+    }
+    function mode1()
+    {
+        mode=1;
+        $("#file1").show();
+        $("#file2").show();
+        $("#thresholds").hide();
+        $("#weight").hide();
+        $("#thresholds").show();
+        $("#weight").show();
+        $("#label1").show();
+        $("#label2").show();
+        $("#thresholds").attr("disabled",true);
+        $("#thresholds").val("Na");
+        $("#weight").attr("disabled",false);
+        $("#weight").val(1);
+        $("#code").attr("disabled",true);
+        $("#code").val("快速匹配模式：快速匹配两个代码工程的相似度");
+    }
+    function mode2()
+    {
+        mode=2;
+        $("#file1").show();
+        $("#file2").show();
+        $("#thresholds").show();
+        $("#weight").show();
+        $("#label1").show();
+        $("#label2").show();
+        $("#thresholds").attr("disabled",true);
+        $("#thresholds").val("Na");
+        $("#weight").attr("disabled",false);
+        $("#weight").val(1);
+        $("#code").attr("disabled",true);
+        $("#code").val("一对多匹配模式：匹配一个代码工程和样本库代码的相似度");
+    }
+    function mode3()
+    {
+        mode=3;
+        $("#file1").show();
+        $("#file2").hide();
+        $("#thresholds").show();
+        $("#weight").show();
+        $("#label1").show();
+        $("#label2").show();
+        $("#thresholds").attr("disabled",false);
+        $("#thresholds").val(0.6);
+        $("#weight").attr("disabled",false);
+        $("#weight").val(1);
+        $("#code").attr("disabled",true);
+        $("#code").val("组匹配模式：用来匹配若干个代码工程彼此之间的相似度");
+    }
+    function mode4()
+    {
+        mode=4;
+        $("#file1").show();
+        $("#file2").show();
+        $("#thresholds").show();
+        $("#weight").show();
+        $("#label1").show();
+        $("#label2").show();
+        $("#thresholds").attr("disabled",false);
+        $("#thresholds").val(0.6);
+        $("#weight").attr("disabled",false);
+        $("#weight").val(1);
+        $("#code").attr("disabled",true);
+        $("#code").val("多对多组匹配模式：用来匹配若干个代码工程和样本库的相似度");
+    }
+    function mode5()
+    {
+        mode=5;
+        $("#file1").hide();
+        $("#file2").hide();
+        $("#thresholds").hide();
+        $("#weight").hide();
+        $("#label1").hide();
+        $("#label2").hide();
+        $("#thresholds").attr("disabled",true);
+        $("#weight").attr("disabled",true);
+        $("#code").attr("disabled",false);
+        $("#code").val(
+            "//以下为必填参数 \n" +
+            "mode:{mode};//匹配模式\n " +
+            "file1:{file1};//目标位置\n " +
+            "file2:{file2};//除组匹配模式必填 样本位置\n " +
+            "threshold:0.6;//除快速匹配模式必填 默认值0.6 筛选阈值,如果列出所有结果请填0 \n" +
+            "weight:1;\n //结构权重 默认值1 仅用点匹配请输入point_only,仅用边匹配请输入edge_only\n" +
+            "codeSuffix:java//多个参数用逗号隔开\n"+
+            "//以下为开发参数 \n" +
+            "makeDiagram:True//是否自动生成代码结构的有向图文件 默认true\n"+
+            "checkThreshold:0.6; //点近似度匹配关联点的阈值,默认0.6 \n" +
+            "lowIndex:1; //点距离累计的衰减因子,默认1 \n" +
+            "byLines:False; //是否按照文件行数赋予代码文件不同的近似度权值\n" +
+            "bySize:False; //是否按照文件大小赋予代码文件不同的近似度权值,互斥byLines\n" +
+            "removeComment:True;//是否筛筛选用注释\n" +
+            "removeSpace:True;//是否禁用筛选空字段\n" +
+            "//自定义匹配参数");
+    }
+
+
+</script>
+<body>
+<div style="margin-top: 20px;">
+    <!--left-->
+    <div class="col-lg-2 col-md-offset-1">
+        <ul id="typeList" class="nav nav-pills nav-stacked">
+            <li class="active">
+                <a href="#">WorkMode</a>
+            </li>
+            <li>
+                <div id="0">
+                    <a style="font-size: large;" onclick="mode0()">
+                        <span class="glyphicon glyphicon-cog" style="cursor:pointer">运行样例</span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div id="1">
+                    <a style="font-size: large;" onclick="mode1();">
+                        <span class="glyphicon glyphicon-cog" style="cursor:pointer">快速匹配</span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div id="2">
+                    <a style="font-size: large;" onclick="mode2()">
+                        <span class="glyphicon glyphicon-cog" style="cursor:pointer">组匹配</span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div id="3">
+                    <a style="font-size: large;" onclick="mode3()">
+                        <span class="glyphicon glyphicon-cog" style="cursor:pointer">一对多匹配</span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div id="4">
+                    <a style="font-size: large;" onclick="mode4()">
+                        <span class="glyphicon glyphicon-cog" style="cursor:pointer">多对多匹配</span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div id="5">
+                    <a style="font-size: large;" onclick="mode5()">
+                        <span class="glyphicon glyphicon-cog" style="cursor:pointer">自定义匹配</span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="col-lg-8">
+    <!--按钮部分-->
+    <div>
+        <input type="file" id="file1" webkitdirectory>
+        <input type="file" id="file2" webkitdirectory>
+
+
+        <label id="label1">阈值:</label><label for="thresholds"></label><input type="text" id="thresholds">
+        <br/>
+        <label id="label2">结构权重:</label><label for="weight"></label><input type="text" id="weight">
+        <br/>
+        <label for="code"></label><textarea id="code"  style="width: 600px;height: 300px;resize: none;"></textarea>
+        <br/>
+        <button id="confirm" onclick="send()" class="btn btn-primary">confirm</button>
+        <br/>
+        <br/>
+        <img id="load" src="img/loading.gif" height="50" width="50"/>        <label for="code"></label><textarea id="result"  style="width: 600px;height: 200px;resize: none;"></textarea>
+
+    </div>
+
+
+
+</div>
+
+
+
+
+</body>
+</html>
