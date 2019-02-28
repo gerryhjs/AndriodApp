@@ -1,0 +1,40 @@
+<component name="libraryTable">
+  <library name="lib2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-tx-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-aop-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/aspectjweaver.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-core-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-jms-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/mysql-connector-java-5.1.12-bin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-webmvc-portlet-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-aspects-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-instrument-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/mybatis-spring-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/log4j-1.2.16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/Standard.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-instrument-tomcat-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/com.springsource.org.apache.commons.logging-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-oxm-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/Jstl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-beans-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-webmvc-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-test-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-orm-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/aopalliance-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-context-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-jdbc-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/mybatis-3.2.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/junit-4.8.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-expression-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-build-src-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-context-support-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-web-3.2.9.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/c3p0-0.9.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/commons-logging.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/code_compare1_war_exploded/WEB-INF/lib/spring-framework-bom-3.2.9.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

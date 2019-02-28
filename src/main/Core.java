@@ -162,7 +162,7 @@ public class Core {
                         e.printStackTrace();
                     }
                     if (similar > threshold)
-                        result.append(Scanner1).append("→").append(Scanner2).append(":").append(similar).append(";<br/>");
+                        result.append(Scanner1).append("＝").append(Scanner2).append(":").append(similar).append(";<br/>");
                 }
             }
         }
