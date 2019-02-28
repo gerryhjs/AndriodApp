@@ -70,7 +70,8 @@ public class StringCompare {
                         temp = 1;
                     diff[i][j] = min(diff[i - 1][j] + 1, diff[i][j - 1] + 1, diff[i - 1][j - 1] + temp);
                 }
-            return 1-(diff[s1.length()][s2.length()])/Math.min(s1.length(), s2.length());//-Math.abs(s1.length()-s2.length())
+            return 1-(diff[s1.length()][s2.length()])/s1.length();
+            //return 1-(diff[s1.length()][s2.length()])/Math.min(s1.length(), s2.length());//-Math.abs(s1.length()-s2.length())
         }
         if (mode == 2)
         {

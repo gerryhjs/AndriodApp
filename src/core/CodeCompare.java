@@ -13,7 +13,9 @@ public class CodeCompare {
 
     public double work()
     {
-        return Math.max(compare(codes1,codes2),compare(codes2,codes1));
+        return compare(codes1,codes2);
+       // return Math.max(compare(codes1,codes2),compare(codes2,codes1));
+
 //     if (mode==1)
 //    {
 //        double[][] diff = new double[codes1.length + 1][codes2.length + 1];
