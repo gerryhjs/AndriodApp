@@ -13,9 +13,10 @@ public class CodeFile {
     private StringBuffer code;
     private int index;
     private boolean removeComment=true;
-    private boolean removeSpace=true;
+//    private boolean removeSpace=true;
     private long size;
     private long lines;
+    private String[] dictionary;
     //    private ArrayList<CodeFile> useTo;
 //    private ArrayList<CodeFile> useFrom;
 //    private ArrayList<CodeFile> createTo;
@@ -56,54 +57,139 @@ public class CodeFile {
     }
 
 
-    CodeFile(File file) { //    private double LOW_DOWN=1;
+
+//    CodeFile(File file) { //    private double LOW_DOWN=1;
+//        index=0;
+//        size=0;
+//        lines=0;
+////        boolean findPackage=false;
+//        code=new StringBuffer();
+//        this.fileName=file.getName();
+//
+//      try {
+//          this.setName(fileName.split(("\\."))[0]);
+//      }
+//      catch (Exception e)
+//      {
+//          this.setName(fileName);
+//      }
+//        //this.setName(fileName.replace(".java",""));
+//
+//        FileStreamer fs=new FileStreamer(file);
+//        String s=fs.input();
+//        if (removeComment)
+//        s=removeComment(s);
+//        if (removeSpace)
+//        s=removeTab(s);
+//
+//
+////        s=removeEmptyLine(s);
+//
+//        String[] codex=s.split("\r\n");
+//        codes=codex;
+//        for (String Scanner:codex) {
+//       //System.out.println(Scanner);
+//            if (removeSpace)
+//                Scanner=removeSign(Scanner);
+//            code.append(Scanner);
+//            size+=Scanner.length();
+//            lines++;
+//            if (this.packageName==null)
+//            if (Scanner.contains("package "))
+//            {
+//                this.setPackageName(Scanner.replace("package","").replace(" ","").replace(";",""));
+//            }
+//
+//            //            if (Scanner.replace(" ","").replace("{","").replace("}","")
+////                    .replace(";","").length()>0)
+////                codes.add(Scanner);
+//        }
+//       // System.out.println("====================");
+//        //for (String Scanner:codes)
+//          //  System.out.println(Scanner);
+//    }
+    //
+    CodeFile(File file,String[] dictionary) { //    private double LOW_DOWN=1;
         index=0;
         size=0;
         lines=0;
 //        boolean findPackage=false;
         code=new StringBuffer();
         this.fileName=file.getName();
-        this.setName(fileName.replace(".java",""));
+
+        try {
+            this.setName(fileName.split(("\\."))[0]);
+        }
+        catch (Exception e)
+        {
+            this.setName(fileName);
+        }
+        //this.setName(fileName.replace(".java",""));
+
         FileStreamer fs=new FileStreamer(file);
         String s=fs.input();
         if (removeComment)
-        s=removeComment(s);
-        if (removeSpace)
-        s=removeSpace(s);
+            s=removeComment(s);
+
+        this.dictionary=dictionary;
+        s=removeSign(s);
+        s=removeTab(s);
+
+        s=dealJava(s);
 
 //        s=removeEmptyLine(s);
-
         String[] codex=s.split("\r\n");
         codes=codex;
         for (String Scanner:codex) {
-       //System.out.println(Scanner);
+            //System.out.println(Scanner);
+
             code.append(Scanner);
             size+=Scanner.length();
             lines++;
             if (this.packageName==null)
-            if (Scanner.contains("package "))
-            {
-                this.setPackageName(Scanner.replace("package","").replace(" ","").replace(";",""));
-            }
+                if (Scanner.contains("package "))
+                {
+                    this.setPackageName(Scanner.replace("package","").replace(" ","").replace(";",""));
+                }
 
             //            if (Scanner.replace(" ","").replace("{","").replace("}","")
 //                    .replace(";","").length()>0)
 //                codes.add(Scanner);
         }
-       // System.out.println("====================");
+        // System.out.println("====================");
         //for (String Scanner:codes)
-          //  System.out.println(Scanner);
+        //  System.out.println(Scanner);
     }
-    private String removeComment(String s)
+    private String dealJava(String s)
     {
-        s=s.replaceAll("/\\*{1,2}[\\s\\S]*?\\*/","");
-        s=s.replaceAll("//[\\s\\S]*?\\n","");
+       // if (dictionary==null) return s;
+        for (String Scanner:dictionary)
+        {
+            s=s.replace(Scanner,"*");
+        }
+       // System.out.println(s);
         return s;
     }
-    private String removeSpace(String s)
+
+    private String removeComment(String s)
+    {
+        s=s.replaceAll("/\\*{1,2}[\\s\\S]*?\\*/","*");
+        s=s.replaceAll("//[\\s\\S]*?\\n","*");
+        return s;
+    }
+    private String removeSign(String s)
     {
         s=s.replace("  ","");
-        s=s.replace("\r\n ","\r\n");
+        s=s.replace("'","");
+        s=s.replace("\"","");
+        s=s.replace("{","");
+        s=s.replace("}","");
+        //s=s.replace("\r\n ","\r\n");
+        return s;
+    }
+    private String removeTab(String s)
+    {
+        s=s.replace("\t","");
         return s;
     }
 //    public String removeEmptyLine(String s)
@@ -137,9 +223,6 @@ public class CodeFile {
         this.removeComment = removeComment;
     }
 
-    public void setRemoveSpace(boolean removeSpace) {
-        this.removeSpace = removeSpace;
-    }
 
     public long getSize() {
         return size;
@@ -148,6 +231,9 @@ public class CodeFile {
     public long getLines() {
         return lines;
     }
+
+
+
 
 //    public int getRelateIndex() {
 //        return relateIndex;

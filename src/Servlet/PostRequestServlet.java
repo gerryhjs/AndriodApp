@@ -110,13 +110,13 @@ public class PostRequestServlet extends HttpServlet {
 				Core.setComment(Boolean.parseBoolean(value));
 		}
 		catch (Exception ignored) {}
-		try
-		{
-			String value=getValue(input,"removeSpace");
-			if (!value.equals(""))
-				Core.setSpace(Boolean.parseBoolean(value));
-		}
-		catch (Exception ignored) {}
+//		try
+//		{
+//			String value=getValue(input,"removeSpace");
+//			if (!value.equals(""))
+//				Core.setSpace(Boolean.parseBoolean(value));
+//		}
+//		catch (Exception ignored) {}
 		String reply="";
 		System.out.println(mode+"_"+path1+"_"+path2+"_"+threshold+"_"+weight);
 

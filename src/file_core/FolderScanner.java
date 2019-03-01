@@ -23,6 +23,7 @@ public class FolderScanner {
     private boolean removeComment=true;
     private boolean removeSpace=true;
     private static ArrayList<String> suffixList;
+    private static String[] dictionary;
     public FolderScanner()
     {
         finds=new ArrayList<>();
@@ -38,6 +39,14 @@ public class FolderScanner {
     {
         finds=new ArrayList<>();
         codeFiles=new ArrayList<>();
+    }
+    public void setJavaDictionary(String path)
+    {
+        FileStreamer fs=new FileStreamer(new File(path));
+        String s=fs.input();
+        System.out.println(s);
+        if (s==null) return;
+        dictionary=  s.split(",");
     }
     public void find(String pathName, int depth) throws IOException{
         File dirFile = new File(pathName);
@@ -82,9 +91,9 @@ public class FolderScanner {
                     for (String suffix:suffixList) {
                         if (!finds.contains(file.getName().replace(suffix, ""))) {
                             finds.add(file.getName().replace(suffix, ""));
-                            CodeFile cf = new CodeFile(file);
+                            CodeFile cf;
+                            cf = new CodeFile(file,dictionary);
                             if (!removeComment) cf.setRemoveComment(false);
-                            if (!removeSpace) cf.setRemoveSpace(false);
                             codeFiles.add(cf);
                         }
                     }

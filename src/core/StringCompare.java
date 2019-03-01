@@ -9,11 +9,11 @@ public class StringCompare {
 
     public StringCompare(String s1,String s2)
     {
-        this.s1=s1;
-        this.s2=s2;
+        this.s1=s1.replace("*","");
+        this.s2=s2.replace("*","");
     }
     public double work(int mode) {
-        if ((s1.length()<=3)||(s2.length()<=3)) return 0;
+        if ((s1.length()<10)||(s2.length()<10)) return 0;
         if (mode == 0)//机械容差比较
          /*
             abc=bca=cba dif=0
@@ -70,7 +70,7 @@ public class StringCompare {
                         temp = 1;
                     diff[i][j] = min(diff[i - 1][j] + 1, diff[i][j - 1] + 1, diff[i - 1][j - 1] + temp);
                 }
-            return 1-(diff[s1.length()][s2.length()])/s1.length();
+            return 1-(diff[s1.length()][s2.length()])/Math.min(s1.length(), s2.length());
             //return 1-(diff[s1.length()][s2.length()])/Math.min(s1.length(), s2.length());//-Math.abs(s1.length()-s2.length())
         }
         if (mode == 2)

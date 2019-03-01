@@ -55,21 +55,28 @@ public class CodeCompare {
         double index=0;
         for (String Scanner:codes1)
         {
-            String regex="[^a-zA-Z0-9]";
-            Scanner=Scanner.replaceAll(regex,"");
-            if (Scanner.replaceAll(regex,"").length()>0)
+
+            if (Scanner.length()>0)
             {
                 index++;
                 double similar=0;
+                String ans = null;
                 for(String Scanner2:codes2)
                 {
-                    Scanner2=Scanner2.replaceAll(regex,"");
-                    double temp = new StringCompare(Scanner, Scanner2).work(1);
-                    //System.out.println(Scanner + "<->" + Scanner2 + ":"+ temp);
-                    if (temp > 1) temp = 1;
-                    temp=Math.pow(temp,1);
-                    similar = Math.max(similar, temp);
+                    if (Scanner2.length()>0) {
+                        double temp = new StringCompare(Scanner, Scanner2).work(1);
+                        //System.out.println(Scanner + "<->" + Scanner2 + ":"+ temp);
+                        if (temp > 1) temp = 1;
+                        temp = Math.pow(temp, 1);
+                      //  similar = Math.max(similar, temp);
+                        if (temp>similar)
+                        {
+                            similar=temp;
+                            ans = Scanner + "=>" + Scanner2;
+                        }
+                    }
                 }
+                System.out.println(ans+":"+similar);
                 //System.out.println(similar);
                 sum+=similar;
             }

@@ -40,7 +40,6 @@ public class Core {
     }
 
     private boolean comment=true;
-    private boolean space=true;
     private ArrayList<String> suffixList=new ArrayList<>();
 
     public void setSuffixList(ArrayList<String> suffixList)
@@ -63,13 +62,12 @@ public class Core {
         byLines=false;
         bySize=false;
         comment=true;
-        space=true;
     }
     @Test
     public void test()
     {
         createDiagram=false;
-        bySize=true;
+        //bySize=true;
         System.out.println(test_compare2());
     }
 
@@ -84,8 +82,8 @@ public class Core {
         String[] paths = new String[projectSize];
 //        for (int i = 0; i < projectSize; i++)
 //            paths[i] = selectFolder();
-        paths[0]="/media/hjs/KINGSTON/check/jsp-lab";
-        paths[1]="/media/hjs/KINGSTON/check/jsp-server";
+        paths[0]="/media/hjs/KINGSTON/check/predict";
+        paths[1]="/media/hjs/KINGSTON/check/jsp-lab";
         double result = 0;
         try {
             result = compare(paths[0], paths[1], 1d);
@@ -234,6 +232,7 @@ public class Core {
             sumSimilar += max_similar;
                 //sumSimilar+=Math.pow(max_similar,2);
         }
+        if (weightIndex<=0) weightIndex=1;
         double similar1=sumSimilar/weightIndex;
         double sumSimilar2=0;
 
@@ -243,9 +242,12 @@ public class Core {
         for (Vertex Scanner:v1)
         {
             index++;
-
-
             Vertex like=likely.get(Scanner);
+            try {
+                System.out.println(Scanner.info() + "=" + like.info());
+            }catch (Exception ignored) {
+
+            }
             if (like!=null)
             {
                 Set relates=Scanner.getTo();
@@ -272,15 +274,14 @@ public class Core {
 //                            if (diff<=sumDis*0.03+1) similar=0.9;
 //                            if (diff<=sumDis*0.01+1) similar=1;
 
-
                             System.out.println("S="+similar);
 
                         }
                         sum+=similar;//*(Scanner.similar(like));//+((Vertex)Scanner2).similar(like2)
 
-                    }catch (Exception ignored)
+                    }catch (Exception e)
                     {
-
+                        System.out.println(e);
                     }
                 }
 //                double edge_MaxS=1d;
@@ -318,7 +319,7 @@ public class Core {
     //    System.out.println(sumSimilar2+"_"+weightIndex);
 
         double similar2;
-
+        if (weightIndex<=0) weightIndex=1;
          //double sizes=v1.size();
             similar2=sumSimilar2/(weightIndex);
 //        else
@@ -353,8 +354,8 @@ public class Core {
         if (suffixList.size()==0) suffixList.add("java");
 
         fs.setSuffixList(suffixList);
+        fs.setJavaDictionary("/home/hjs/code_compare/src/dictionary");
         if (!comment) fs.disableComment();
-        if (!space) fs.disableSpace();
 
         fs.find(path,1);
         for (CodeFile Scanner:fs.getCodeFiles()) {
@@ -371,6 +372,7 @@ public class Core {
                 if (times>0) {
                     double weight=0.25d/(Math.sqrt(times))+1;//距离权重 1-1.25
                     m.getVertex(Scanner.getFileName()).Relate(m.getVertex(Scanner2.getFileName()),weight);
+               //     System.out.println("MS"+m.getVertex(Scanner.getFileName()).getTo().size());
                 }
             }
             System.out.println();
@@ -483,6 +485,5 @@ public class Core {
     }
 
     public void setSpace(boolean space) {
-        this.space = space;
     }
 }
