@@ -133,9 +133,9 @@ public class CodeFile {
 
         this.dictionary=dictionary;
 //        s=removeSign(s);
-        s=removeTab(s);
 
-        s=dealJava(s);
+        s=removeTab(s);
+        s=deal(s);
 
 //        s=removeEmptyLine(s);
         String[] codex=s.split("\r\n");
@@ -160,7 +160,7 @@ public class CodeFile {
         //for (String Scanner:codes)
         //  System.out.println(Scanner);
     }
-    private String dealJava(String s)
+    private String deal(String s)
     {
        // if (dictionary==null) return s;
         for (String Scanner:dictionary)
@@ -169,6 +169,7 @@ public class CodeFile {
         }
        // System.out.println(s);
         return s;
+
     }
 
     private String removeComment(String s)
