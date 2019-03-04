@@ -26,15 +26,13 @@ public class Core {
 
     private double check=0.6;
     private double LOW_DOWN=1;
-
-    public void setCreateDiagram(boolean createDiagram) {
-        this.createDiagram = createDiagram;
-    }
-
     private boolean createDiagram=true;
     private boolean byLines=false;
     private boolean bySize=false;
 
+    public void setCreateDiagram(boolean createDiagram) {
+        this.createDiagram = createDiagram;
+    }
     public void setComment(boolean comment) {
         this.comment = comment;
     }
@@ -167,11 +165,6 @@ public class Core {
         }
         return result.toString();
     }
-
-
-
-
-
 
     public double compareDiagram(Diagram m1, Diagram m2,double weight_edge)
     {

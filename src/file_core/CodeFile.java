@@ -132,7 +132,7 @@ public class CodeFile {
             s=removeComment(s);
 
         this.dictionary=dictionary;
-        s=removeSign(s);
+//        s=removeSign(s);
         s=removeTab(s);
 
         s=dealJava(s);
@@ -177,16 +177,16 @@ public class CodeFile {
         s=s.replaceAll("//[\\s\\S]*?\\n","*");
         return s;
     }
-    private String removeSign(String s)
-    {
-        s=s.replace("  ","");
-        s=s.replace("'","");
-        s=s.replace("\"","");
-        s=s.replace("{","");
-        s=s.replace("}","");
-        //s=s.replace("\r\n ","\r\n");
-        return s;
-    }
+//    private String removeSign(String s)
+//    {
+//        s=s.replace("  ","");
+//        s=s.replace("'","");
+//        s=s.replace("\"","");
+//        s=s.replace("{","");
+//        s=s.replace("}","");
+//        //s=s.replace("\r\n ","\r\n");
+//        return s;
+//    }
     private String removeTab(String s)
     {
         s=s.replace("\t","");
