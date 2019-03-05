@@ -114,7 +114,7 @@ public class LearnProject {
         myDatas=new ArrayList<>();
     }
 
-    public void training(double step, double times)
+    public void training(double step, int times)
     {
         if (times==0)
         {
@@ -259,9 +259,9 @@ public class LearnProject {
         this.threshold=threshold;
         this.check_threshold=check_threshold;
          */
-        return "edge_weight:["+edge_weight_key+
-                "\npow_dis:["+pow_dis_key+
-                "\nthreshold:["+threshold_key+
-                "\ncheck_threshold:["+check_threshold_key;
+        return "edge_weight:"+edge_weight_key+
+                "\npow_dis:"+pow_dis_key+
+                "\nthreshold:"+threshold_key+
+                "\ncheck_threshold:"+check_threshold_key;
     }
 }

@@ -43,9 +43,7 @@ public class TestList {
         lp.addData(path0,path2,false);
         lp.addData(path2,path3,false);
         lp.addData(path3,path2,true);
-
-        lp.training(2,10);
-
+        lp.training(2,5);
 
     }
 }
