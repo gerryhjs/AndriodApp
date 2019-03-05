@@ -1,7 +1,7 @@
 package Servlet;
 
 
-import main.Core;
+import main.CompareFactory;
 import org.junit.Test;
 
 import javax.servlet.annotation.WebServlet;
@@ -60,11 +60,11 @@ public class PostRequestServlet extends HttpServlet {
     }
 
 		 */
-		Core Core=new Core();
+		CompareFactory CompareFactory =new CompareFactory();
 		try {
 			String value=getValue(input,"codeSuffix");
 			if (!value.equals(""))
-				Core.setSuffixList(new ArrayList<>(Arrays.asList(value.split(","))));
+				CompareFactory.setSuffixList(new ArrayList<>(Arrays.asList(value.split(","))));
 
 		}
 		catch (Exception ignored) {}
@@ -72,49 +72,49 @@ public class PostRequestServlet extends HttpServlet {
 		{
 			String value=getValue(input,"makeDiagram");
 			if (!value.equals(""))
-				Core.setCreateDiagram(Boolean.parseBoolean(value));
+				CompareFactory.setCreateDiagram(Boolean.parseBoolean(value));
 		}
 		catch (Exception ignored) {}
 		try
 		{
 			String value=getValue(input,"checkThreshold");
 			if (!value.equals(""))
-				Core.setCheck(Double.parseDouble(value));
+				CompareFactory.setCheck(Double.parseDouble(value));
 		}
 		catch (Exception ignored) {}
 		try
 		{
 			String value=getValue(input,"lowIndex");
 			if (!value.equals(""))
-				Core.setLOW_DOWN(Double.parseDouble(value));
+				CompareFactory.setLOW_DOWN(Double.parseDouble(value));
 		}
 		catch (Exception ignored) {}
 		try
 		{
 			String value=getValue(input,"byLines");
 			if (!value.equals(""))
-				Core.setByLines(Boolean.parseBoolean(value));
+				CompareFactory.setByLines(Boolean.parseBoolean(value));
 		}
 		catch (Exception ignored) {}
 		try
 		{
 			String value=getValue(input,"bySize");
 			if (!value.equals(""))
-				Core.setBySize(Boolean.parseBoolean(value));
+				CompareFactory.setBySize(Boolean.parseBoolean(value));
 		}
 		catch (Exception ignored) {}
 		try
 		{
 			String value=getValue(input,"removeComment");
 			if (!value.equals(""))
-				Core.setComment(Boolean.parseBoolean(value));
+				CompareFactory.setComment(Boolean.parseBoolean(value));
 		}
 		catch (Exception ignored) {}
 		try
 		{
 			String value=getValue(input,"removeSpace");
 			if (!value.equals(""))
-				Core.setSpace(Boolean.parseBoolean(value));
+				CompareFactory.setSpace(Boolean.parseBoolean(value));
 		}
 		catch (Exception ignored) {}
 		String reply="";
@@ -123,27 +123,27 @@ public class PostRequestServlet extends HttpServlet {
 
 		if (mode==1)
 		{
-			reply= df.format(Core.compare(path1, path2, weight) * 100) + "%";
+			reply= df.format(CompareFactory.compare(path1, path2, weight) * 100) + "%";
 		}
 		if (mode==2)
 		{
-			reply= String.valueOf(Core.compare(path1,threshold,weight));
+			reply= String.valueOf(CompareFactory.compare(path1,threshold,weight));
 		}
 		if (mode==3)
 		{
-			reply= String.valueOf(Core.compare2(path1,path2,weight));
+			reply= String.valueOf(CompareFactory.compare2(path1,path2,weight));
 		}
 		if (mode==4)
 		{
-			reply=String.valueOf(Core.compare(path1,path2,threshold,weight));
+			reply=String.valueOf(CompareFactory.compare(path1,path2,threshold,weight));
 		}
 		if (mode==0)
 		{
-			reply=String.valueOf(Core.test_compare());
+			reply=String.valueOf(CompareFactory.test_compare());
 		}
 		//deal
 
-		Core.initSetting();
+		CompareFactory.initSetting();
 
 		System.out.println("output=" + reply);
 

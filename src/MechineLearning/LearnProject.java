@@ -12,6 +12,8 @@ public class LearnProject {
     {
 
     }
+    public void training()
+    {
 
-
+    }
 }
