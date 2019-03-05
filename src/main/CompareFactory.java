@@ -50,7 +50,7 @@ public abstract  class CompareFactory {
         byLines=false;
         bySize=false;
         adj_dis=1;
-        ArrayList<String> suffixList=new ArrayList<>();
+        suffixList=new ArrayList<>();
         suffixList.add("java");
     }
 
@@ -354,7 +354,10 @@ public abstract  class CompareFactory {
         Diagram m=new Diagram(name);
         FolderScanner fs=new FolderScanner();
 
-        if (suffixList.size()==0) return null;
+        if (suffixList.size()==0)
+        {
+            return null;
+        }
 
         fs.setSuffixList(suffixList);
         fs.setJavaDictionary(dictionary_path);
