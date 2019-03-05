@@ -39,7 +39,6 @@ public abstract  class CompareFactory {
     private static final String path1="/media/hjs/KINGSTON/check/jsp-lab";
 
     private static final String exPath="/home/hjs/下载/";
-    private static final String vizPath="";
     private static final String graphVizPath="C:\\Users\\Saika\\Desktop\\output";
     private static final String dotPath="C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
 
@@ -495,7 +494,5 @@ public abstract  class CompareFactory {
         return exPath;
     }
 
-    public String getVizPath() {
-        return vizPath;
-    }
+
 }
