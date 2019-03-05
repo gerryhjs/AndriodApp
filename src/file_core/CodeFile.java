@@ -162,7 +162,7 @@ public class CodeFile {
     }
     private String deal(String s)
     {
-       // if (dictionary==null) return s;
+        if (dictionary==null) return s;
         for (String Scanner:dictionary)
         {
             s=s.replace(Scanner,"*");

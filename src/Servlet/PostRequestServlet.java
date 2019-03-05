@@ -58,11 +58,11 @@ public class PostRequestServlet extends HttpServlet {
     }
 
 		 */
-		CompareFactory CompareFactory =new CompareFactory();
+		CompareFactory.init();
 		try {
 			String value=getValue(input,"codeSuffix");
 			if (!value.equals(""))
-				CompareFactory.setSuffixList(new ArrayList<>(Arrays.asList(value.split(","))));
+				CompareFactory.suffixList=new ArrayList<>(Arrays.asList(value.split(",")));
 
 		}
 		catch (Exception ignored) {}
@@ -70,7 +70,7 @@ public class PostRequestServlet extends HttpServlet {
 		{
 			String value=getValue(input,"makeDiagram");
 			if (!value.equals(""))
-				CompareFactory.setCreateDiagram(Boolean.parseBoolean(value));
+				CompareFactory.createDiagram=Boolean.parseBoolean(value);
 		}
 		catch (Exception ignored) {}
 
@@ -79,24 +79,18 @@ public class PostRequestServlet extends HttpServlet {
 		{
 			String value=getValue(input,"byLines");
 			if (!value.equals(""))
-				CompareFactory.setByLines(Boolean.parseBoolean(value));
+				CompareFactory.byLines=Boolean.parseBoolean(value);
 		}
 		catch (Exception ignored) {}
 		try
 		{
 			String value=getValue(input,"bySize");
 			if (!value.equals(""))
-				CompareFactory.setBySize(Boolean.parseBoolean(value));
+				CompareFactory.bySize=Boolean.parseBoolean(value);
 		}
 		catch (Exception ignored) {}
 
-		try
-		{
-			String value=getValue(input,"removeSpace");
-			if (!value.equals(""))
-				CompareFactory.setSpace(Boolean.parseBoolean(value));
-		}
-		catch (Exception ignored) {}
+
 		String reply="";
 		System.out.println(mode+"_"+path1+"_"+path2+"_"+threshold+"_"+weight);
 
@@ -119,11 +113,11 @@ public class PostRequestServlet extends HttpServlet {
 		}
 		if (mode==0)
 		{
-			reply=String.valueOf(CompareFactory.test_compare());
+			reply=String.valueOf(CompareFactory.test_compare2());
 		}
 		//deal
 
-		CompareFactory.initSetting();
+
 
 		System.out.println("output=" + reply);
 

@@ -22,18 +22,18 @@ import java.util.regex.Pattern;
  * Created by Saika on 2019/1/12.
  */
 public abstract  class CompareFactory {
-    private DecimalFormat df = new DecimalFormat("#.00");
+    private static DecimalFormat df = new DecimalFormat("#.00");
 
-    private boolean createDiagram=true;
-    private boolean byLines=false;
-    private boolean bySize=false;
+    public static ArrayList<String> suffixList=new ArrayList<>();
+    public static boolean createDiagram=true;
+    public static boolean byLines=false;
+    public static boolean bySize=false;
+    public static double adj_dis=1;
 
-    private double adj_dis=1;
-
-    private final boolean COMMENT=true;
-    private final double CHECK=0.6;
-    private final double LOW_INDEX=1;
-    private final double BAS_DIS=1;
+    private static final boolean COMMENT=true;
+    private static final double CHECK=0.6;
+    private static final double LOW_INDEX=1;
+    private static final double BAS_DIS=1;
 
     private static final String dictionary_path="/home/hjs/code_compare/src/dictionary";
     private static final String target_path="/media/hjs/KINGSTON/check/";
@@ -43,6 +43,16 @@ public abstract  class CompareFactory {
     private static final String exPath="/home/hjs/下载/";
     private static final String graphVizPath="C:\\Users\\Saika\\Desktop\\output";
     private static final String dotPath="C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
+
+    public static void init()
+    {
+        createDiagram=true;
+        byLines=false;
+        bySize=false;
+        adj_dis=1;
+        ArrayList<String> suffixList=new ArrayList<>();
+        suffixList.add("java");
+    }
 
     public static String getGraphVizPath() {
         return graphVizPath;
@@ -56,19 +66,11 @@ public abstract  class CompareFactory {
         return exPath;
     }
 
-    private double dis(int times) {
-
-        return 0;
+    private static double dis(int times) {
+        return BAS_DIS+adj_dis/Math.pow(times,0.5);
     }
 
-
-    @Test
-    public void Facotory_test()
-    {
-        createDiagram=false;
-        test_compare2();
-    }
-    public String test_compare2(){
+    public static String test_compare2(){
         int projectSize = 2;
         String[] paths = new String[projectSize];
         paths[0]=path0;
@@ -84,25 +86,13 @@ public abstract  class CompareFactory {
         return (df.format(result * 100) + "%");
     }
 
-    public void setCreateDiagram(boolean createDiagram) {
-        this.createDiagram = createDiagram;
-    }
 
 
-    private ArrayList<String> suffixList=new ArrayList<>();
-
-    public void setSuffixList(ArrayList<String> suffixList)
-    {
-        this.suffixList=suffixList;
-    }
 
 
-    public void initSetting()
-    {
-        createDiagram=true;
-        byLines=false;
-        bySize=false;
-    }
+
+
+
 
 
 //
@@ -114,7 +104,7 @@ public abstract  class CompareFactory {
 
 
 
-    public double compare(String path0, String path1,double weight_edge) throws IOException //1-1
+    public static double compare(String path0, String path1, double weight_edge) throws IOException //1-1
     {
         int projectSize = 2;
         String[] paths = new String[projectSize];
@@ -128,7 +118,7 @@ public abstract  class CompareFactory {
         }
         return compareDiagram(projects[0],projects[1],weight_edge);
     }
-    public double compare2(String path1,String path2,double weight_edge)//1-N
+    public static double compare2(String path1,String path2,double weight_edge)//1-N
     {
         double similar = 0;
         String[] paths=new File(path2).list();
@@ -146,12 +136,12 @@ public abstract  class CompareFactory {
     }
 
 
-    public String compare(String path,double threshold,double weight_edge)//N
+    public static String compare(String path,double threshold,double weight_edge)//N
     {
         return compare(path,path,threshold,weight_edge);
     }
 
-    public String compare(String path1,String path2,double threshold,double weight_edge)//N-N
+    public static String compare(String path1, String path2, double threshold, double weight_edge)//N-N
     {
         if (!path1.endsWith("File.separator")) path1 += File.separator;
         if (!path2.endsWith("File.separator")) path2 += File.separator;
@@ -186,7 +176,7 @@ public abstract  class CompareFactory {
         return result.toString();
     }
 
-    public double compareDiagram(Diagram m1, Diagram m2,double weight_edge)
+    public static double compareDiagram(Diagram m1, Diagram m2, double weight_edge)
     {
         //思路：匹配点 比较边权值  或者比较边后匹配点？
         // 得出结论 单向匹配z
@@ -358,13 +348,13 @@ public abstract  class CompareFactory {
 
         return result;
     }
-    private Diagram check(String path) throws IOException {
+    private static Diagram check(String path) throws IOException {
         String[] temp=path.split("/");
         String name=temp[temp.length-1];
         Diagram m=new Diagram(name);
         FolderScanner fs=new FolderScanner();
 
-        if (suffixList.size()==0) suffixList.add("java");
+        if (suffixList.size()==0) return null;
 
         fs.setSuffixList(suffixList);
         fs.setJavaDictionary(dictionary_path);
@@ -394,7 +384,7 @@ public abstract  class CompareFactory {
 
     }
 
-    private int scanFolder(CodeFile Scanner, String code, CodeFile Scanner2) {
+    private static int scanFolder(CodeFile Scanner, String code, CodeFile Scanner2) {
         String target="[^a-zA-Z0-9]"+Scanner2.getName()+"[^a-zA-Z0-9]";
         if (Scanner.getName().equals(Scanner2.getName()))
             target=Scanner2.getName();
@@ -407,7 +397,7 @@ public abstract  class CompareFactory {
     }
 
 
-    private void check_draw(String path) throws IOException {
+    private static void check_draw(String path) throws IOException {
 
         ArrayList<String> Edges=new ArrayList<>();
       //  ArrayList<String> Edges2=new ArrayList<>();
@@ -498,10 +488,13 @@ public abstract  class CompareFactory {
         this.bySize = bySize;
     }
 
-    public void setSpace(boolean space) {
+    public void setSuffixList(ArrayList<String> suffixList)
+    {
+        this.suffixList=suffixList;
     }
-
-
+    public  void setCreateDiagram(boolean createDiagram) {
+        this.createDiagram = createDiagram;
+    }
 
 
 
