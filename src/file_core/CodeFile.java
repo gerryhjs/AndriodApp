@@ -190,8 +190,10 @@ public class CodeFile {
 //    }
     private String removeTab(String s)
     {
-        s=s.replace("\t","");
+        s=s.replace("  ","*");
+        s=s.replace("\t","*");
         return s;
+        //  s=s.replace("---","*");
     }
 //    public String removeEmptyLine(String s)
 //    {

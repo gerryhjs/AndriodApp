@@ -6,8 +6,6 @@ import calc_map.Vertex;
 import file_core.CodeFile;
 import file_core.FolderScanner;
 import graphViz.GraphVizTest;
-import org.junit.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -29,9 +27,10 @@ public abstract  class CompareFactory {
     public static boolean byLines=false;
     public static boolean bySize=false;
     public static double adj_dis=1;
+    public static double pow_dis=1;
+    public static double check_threshold =0.6;
 
     private static final boolean COMMENT=true;
-    private static final double CHECK=0.6;
     private static final double LOW_INDEX=1;
     private static final double BAS_DIS=1;
 
@@ -50,6 +49,8 @@ public abstract  class CompareFactory {
         byLines=false;
         bySize=false;
         adj_dis=1;
+        pow_dis=1;
+        check_threshold =0.6;
         suffixList=new ArrayList<>();
         suffixList.add("java");
     }
@@ -67,7 +68,7 @@ public abstract  class CompareFactory {
     }
 
     private static double dis(int times) {
-        return BAS_DIS+adj_dis/Math.pow(times,0.5);
+        return BAS_DIS+adj_dis/Math.pow(times,pow_dis);
     }
 
     public static String test_compare2(){
@@ -76,11 +77,7 @@ public abstract  class CompareFactory {
         paths[0]=path0;
         paths[1]=path1;
         double result = 0;
-        try {
-            result = compare(paths[0], paths[1], 1d);
-        } catch (IOException ignored) {
-
-        }
+        result = compare(paths[0], paths[1], 1d);
         System.out.println();
         System.out.println("Result->" + df.format(result * 100) + "%");
         return (df.format(result * 100) + "%");
@@ -104,7 +101,7 @@ public abstract  class CompareFactory {
 
 
 
-    public static double compare(String path0, String path1, double weight_edge) throws IOException //1-1
+    public static double compare(String path0, String path1, double weight_edge)//1-1
     {
         int projectSize = 2;
         String[] paths = new String[projectSize];
@@ -116,32 +113,34 @@ public abstract  class CompareFactory {
                 check_draw(paths[i]);
             projects[i] = check(paths[i]);
         }
-        return compareDiagram(projects[0],projects[1],weight_edge);
+
+        if (projects[0] != null) {
+            if (projects[1] != null) {
+                return compareDiagram(projects[0],projects[1],weight_edge);
+            }
+        }
+        return 0;
     }
-    public static double compare2(String path1,String path2,double weight_edge)//1-N
+    public static double compare_oneToGroup(String path1,String path2,double weight_edge)//1-N
     {
         double similar = 0;
         String[] paths=new File(path2).list();
         if (paths==null) return 0;
         for(String Scanner2:paths) {
-            try {
-                if (createDiagram)
-                    check_draw(Scanner2);
-                similar = Math.max(compare(path1, Scanner2, weight_edge),similar);
-            } catch (IOException ignored) {
-
-            }
+            if (createDiagram)
+                check_draw(Scanner2);
+            similar = Math.max(compare(path1, Scanner2, weight_edge),similar);
         }
         return similar;
     }
 
 
-    public static String compare(String path,double threshold,double weight_edge)//N
+    public static String compare_inGroup(String path,double threshold,double weight_edge)//N
     {
-        return compare(path,path,threshold,weight_edge);
+        return compare_betweenGroup(path,path,threshold,weight_edge);
     }
 
-    public static String compare(String path1, String path2, double threshold, double weight_edge)//N-N
+    public static String compare_betweenGroup(String path1, String path2, double threshold, double weight_edge)//N-N
     {
         if (!path1.endsWith("File.separator")) path1 += File.separator;
         if (!path2.endsWith("File.separator")) path2 += File.separator;
@@ -153,21 +152,13 @@ public abstract  class CompareFactory {
         for(String Scanner1:paths1)
         {
             if (createDiagram) {
-                try {
-                    check_draw(Scanner1);
-                } catch (IOException ignored) {
-                    continue;
-                }
+                check_draw(Scanner1);
             }
 
             for(String Scanner2:paths2) {
                 double similar = 0;
                 if (!Scanner1.equals(Scanner2)) {
-                    try {
-                        similar = compare(path1+Scanner1, path2+Scanner2, weight_edge);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    similar = compare(path1+Scanner1, path2+Scanner2, weight_edge);
                     if (similar > threshold)
                         result.append(Scanner1).append("-").append(Scanner2).append(":").append(similar).append(";<br/>");
                 }
@@ -200,7 +191,7 @@ public abstract  class CompareFactory {
             for (Vertex Scanner2:v2) {
                 double this_similar = Scanner.similar(Scanner2);
                 if (this_similar > max_similar) {
-                    if (this_similar>CHECK)
+                    if (this_similar> check_threshold)
                     result = Scanner2;
                     max_similar = this_similar;
                     if (max_similar == 1) break;
@@ -348,7 +339,7 @@ public abstract  class CompareFactory {
 
         return result;
     }
-    private static Diagram check(String path) throws IOException {
+    private static Diagram check(String path) {
         String[] temp=path.split("/");
         String name=temp[temp.length-1];
         Diagram m=new Diagram(name);
@@ -362,8 +353,11 @@ public abstract  class CompareFactory {
         fs.setSuffixList(suffixList);
         fs.setJavaDictionary(dictionary_path);
         if (!COMMENT) fs.disableComment();
+        try {
+            fs.find(path,1);
+        } catch (IOException ignored) {
 
-        fs.find(path,1);
+        }
         for (CodeFile Scanner:fs.getCodeFiles()) {
             Vertex v=new Vertex(Scanner);
             m.addVertex(v);
@@ -400,12 +394,16 @@ public abstract  class CompareFactory {
     }
 
 
-    private static void check_draw(String path) throws IOException {
+    private static void check_draw(String path) {
 
         ArrayList<String> Edges=new ArrayList<>();
       //  ArrayList<String> Edges2=new ArrayList<>();
         FolderScanner fs=new FolderScanner();
-        fs.find(path,1);
+        try {
+            fs.find(path,1);
+        } catch (IOException ignored) {
+
+        }
         for (CodeFile Scanner:fs.getCodeFiles()) {
             Scanner.setIndex(0);
         }
