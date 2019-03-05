@@ -28,6 +28,8 @@ public abstract  class CompareFactory {
     private boolean byLines=false;
     private boolean bySize=false;
 
+    private double adj_dis=1;
+
     private final boolean COMMENT=true;
     private final double CHECK=0.6;
     private final double LOW_INDEX=1;
@@ -50,6 +52,14 @@ public abstract  class CompareFactory {
         return dotPath;
     }
 
+    public static String getExPath() {
+        return exPath;
+    }
+
+    private double dis(int times) {
+
+        return 0;
+    }
 
 
     @Test
@@ -340,8 +350,8 @@ public abstract  class CompareFactory {
         System.out.println(similar1+"_"+similar2);
         attrs.add("origin");
         attrs.add("similar_target");
-        attrs.add("Vertex_Similar");
-        attrs.add("Edge_Similar");
+        attrs.add("vertex_Similar");
+        attrs.add("edge_Similar");
       //  attrs.add("Similar");
 
         new ExStreamer("S:"+result+"["+m1.getName()+"-"+m2.getName()+"].xls").excelOut(v1.size(),attrs,values);
@@ -373,7 +383,7 @@ public abstract  class CompareFactory {
             for (CodeFile Scanner2:fs.getCodeFiles()) {
                 int times= scanFolder(Scanner, code, Scanner2);;
                 if (times>0) {
-                    double weight=0.25d/(Math.sqrt(times))+1;//距离权重 1-1.25
+                    double weight=dis(times);//距离权重 1-1.25
                     m.getVertex(Scanner.getFileName()).Relate(m.getVertex(Scanner2.getFileName()),weight);
                //     System.out.println("MS"+m.getVertex(Scanner.getFileName()).getTo().size());
                 }
@@ -413,7 +423,7 @@ public abstract  class CompareFactory {
             for (CodeFile Scanner2:fs.getCodeFiles()) {
                 int times=scanFolder(Scanner, code, Scanner2);
                 if (times>0) {
-                    double weight=0.25d/(Math.sqrt(times))+1;//权重 1-1.25
+                    double weight=dis(times);//权重 1-1.25
                     Edges.add("\"" + Scanner.getFileName() + "\"" + "->" +
                             "\"" + Scanner2.getFileName() + "\"" + " " +
                             "[label=\"" + weight + "\"]");
@@ -435,6 +445,7 @@ public abstract  class CompareFactory {
 //        gvt2.draw(Edges2,"relation_"+i);
 
     }
+
 
 
     //    String type="";
@@ -490,9 +501,8 @@ public abstract  class CompareFactory {
     public void setSpace(boolean space) {
     }
 
-    public static String getExPath() {
-        return exPath;
-    }
+
+
 
 
 }
