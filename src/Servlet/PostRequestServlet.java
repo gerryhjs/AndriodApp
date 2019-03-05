@@ -48,14 +48,12 @@ public class PostRequestServlet extends HttpServlet {
             "threshold:0.6;//除快速匹配模式必填 默认值0.6 筛选阈值,如果列出所有结果请填0 \n" +
             "weight:1;\n //结构权重 默认值1 仅用点匹配请输入point_only,仅用边匹配请输入edge_only\n" +
             "codeSuffix:java//多个参数用逗号隔开\n"+
-            "//以下为开发参数 \n" +
             "makeDiagram:True//是否自动生成代码结构的有向图文件 默认true\n"+
-            "checkThreshold:0.6; //点近似度匹配关联点的阈值,默认0.6 \n" +
-            "lowIndex:1; //点距离累计的衰减因子,默认1 \n" +
-            "byLines:False; //是否按照文件行数赋予代码文件不同的近似度权值\n" +
-            "bySize:False; //是否按照文件大小赋予代码文件不同的近似度权值,互斥byLines\n" +
-            "removeComment:True;//是否筛筛选用注释\n" +
-            "removeSpace:True;//是否禁用筛选空字段\n" +
+//            "checkThreshold:0.6; //点近似度匹配关联点的阈值,默认0.6 \n" +
+//            "byLines:False; //是否按照文件行数赋予代码文件不同的近似度权值\n" +
+//            "bySize:False; //是否按照文件大小赋予代码文件不同的近似度权值,互斥byLines\n" +
+//            "removeComment:True;//是否筛筛选用注释\n" +
+//            "removeSpace:True;//是否禁用筛选空字段\n" +
             "//自定义匹配参数");
     }
 
@@ -75,20 +73,8 @@ public class PostRequestServlet extends HttpServlet {
 				CompareFactory.setCreateDiagram(Boolean.parseBoolean(value));
 		}
 		catch (Exception ignored) {}
-		try
-		{
-			String value=getValue(input,"checkThreshold");
-			if (!value.equals(""))
-				CompareFactory.setCheck(Double.parseDouble(value));
-		}
-		catch (Exception ignored) {}
-		try
-		{
-			String value=getValue(input,"lowIndex");
-			if (!value.equals(""))
-				CompareFactory.setLOW_DOWN(Double.parseDouble(value));
-		}
-		catch (Exception ignored) {}
+
+
 		try
 		{
 			String value=getValue(input,"byLines");
@@ -103,13 +89,7 @@ public class PostRequestServlet extends HttpServlet {
 				CompareFactory.setBySize(Boolean.parseBoolean(value));
 		}
 		catch (Exception ignored) {}
-		try
-		{
-			String value=getValue(input,"removeComment");
-			if (!value.equals(""))
-				CompareFactory.setComment(Boolean.parseBoolean(value));
-		}
-		catch (Exception ignored) {}
+
 		try
 		{
 			String value=getValue(input,"removeSpace");

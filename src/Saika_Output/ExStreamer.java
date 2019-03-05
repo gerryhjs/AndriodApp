@@ -7,6 +7,7 @@ import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
+import main.CompareFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +19,7 @@ public class ExStreamer {
 
     //TODO 修改自定义比较结果输出
     private ArrayList<String> attr=new ArrayList<>();
-    private final String path="/home/hjs/下载/";
+    private String path=CompareFactory.getExPath();
     private String filePath;
     public ExStreamer(String filename)
     {

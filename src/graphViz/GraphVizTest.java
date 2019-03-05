@@ -1,10 +1,12 @@
 package graphViz;
 
+import main.CompareFactory;
+
 import java.util.ArrayList;
 
 public class GraphVizTest {
-    private final String graphVizPath="C:\\Users\\Saika\\Desktop\\output";
-    private final String dotPath="C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
+    private final String graphVizPath= CompareFactory.getGraphVizPath();
+    private final String dotPath=CompareFactory.getDotPath();
 
 
     public void draw(ArrayList<String> list,String name) {

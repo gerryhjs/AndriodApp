@@ -21,67 +21,49 @@ import java.util.regex.Pattern;
 /**
  * Created by Saika on 2019/1/12.
  */
-public class CompareFactory {
+public abstract  class CompareFactory {
     private DecimalFormat df = new DecimalFormat("#.00");
 
-    private double check=0.6;
-    private double LOW_DOWN=1;
     private boolean createDiagram=true;
     private boolean byLines=false;
     private boolean bySize=false;
 
-    public void setCreateDiagram(boolean createDiagram) {
-        this.createDiagram = createDiagram;
-    }
-    public void setComment(boolean comment) {
-        this.comment = comment;
+    private final boolean COMMENT=true;
+    private final double CHECK=0.6;
+    private final double LOW_INDEX=1;
+    private final double BAS_DIS=1;
+
+    private static final String dictionary_path="/home/hjs/code_compare/src/dictionary";
+    private static final String target_path="/media/hjs/KINGSTON/check/";
+    private static final String path0="/media/hjs/KINGSTON/check/jsp-server";
+    private static final String path1="/media/hjs/KINGSTON/check/jsp-lab";
+
+    private static final String exPath="/home/hjs/下载/";
+    private static final String vizPath="";
+    private static final String graphVizPath="C:\\Users\\Saika\\Desktop\\output";
+    private static final String dotPath="C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
+
+    public static String getGraphVizPath() {
+        return graphVizPath;
     }
 
-    private boolean comment=true;
-    private ArrayList<String> suffixList=new ArrayList<>();
-
-    public void setSuffixList(ArrayList<String> suffixList)
-    {
-        this.suffixList=suffixList;
-    }
-    public void setCheck(double check) {
-        this.check = check;
+    public static String getDotPath() {
+        return dotPath;
     }
 
-    public void setLOW_DOWN(double LOW_DOWN) {
-        this.LOW_DOWN = LOW_DOWN;
-    }
 
-    public void initSetting()
-    {
-        check=0.6;
-        LOW_DOWN=1;
-        createDiagram=true;
-        byLines=false;
-        bySize=false;
-        comment=true;
-    }
+
     @Test
-    public void test()
+    public void Facotory_test()
     {
         createDiagram=false;
-        //bySize=true;
-        System.out.println(test_compare2());
+        test_compare2();
     }
-
-    public String test_compare()
-    {
-
-        return (compare("/media/hjs/KINGSTON/check/",0,1));
-    }
-
     public String test_compare2(){
         int projectSize = 2;
         String[] paths = new String[projectSize];
-//        for (int i = 0; i < projectSize; i++)
-//            paths[i] = selectFolder();
-        paths[0]="/media/hjs/KINGSTON/check/jsp-server";
-        paths[1]="/media/hjs/KINGSTON/check/jsp-lab";
+        paths[0]=path0;
+        paths[1]=path1;
         double result = 0;
         try {
             result = compare(paths[0], paths[1], 1d);
@@ -92,6 +74,35 @@ public class CompareFactory {
         System.out.println("Result->" + df.format(result * 100) + "%");
         return (df.format(result * 100) + "%");
     }
+
+    public void setCreateDiagram(boolean createDiagram) {
+        this.createDiagram = createDiagram;
+    }
+
+
+    private ArrayList<String> suffixList=new ArrayList<>();
+
+    public void setSuffixList(ArrayList<String> suffixList)
+    {
+        this.suffixList=suffixList;
+    }
+
+
+    public void initSetting()
+    {
+        createDiagram=true;
+        byLines=false;
+        bySize=false;
+    }
+
+
+//
+//    public String test_compare()
+//    {
+//
+//        return (compare(,0,1));
+//    }
+
 
 
     public double compare(String path0, String path1,double weight_edge) throws IOException //1-1
@@ -190,7 +201,7 @@ public class CompareFactory {
             for (Vertex Scanner2:v2) {
                 double this_similar = Scanner.similar(Scanner2);
                 if (this_similar > max_similar) {
-                    if (this_similar>check)
+                    if (this_similar>CHECK)
                     result = Scanner2;
                     max_similar = this_similar;
                     if (max_similar == 1) break;
@@ -250,9 +261,9 @@ public class CompareFactory {
                     try {
                         double similar;
                         Vertex v = (Vertex) Scanner2;
-                        double distance1 = m1.getDistance(Scanner,v,LOW_DOWN);
+                        double distance1 = m1.getDistance(Scanner,v,LOW_INDEX);
                         Vertex like2 = likely.get(v);
-                        double distance2=m2.getDistance(like,like2,LOW_DOWN);
+                        double distance2=m2.getDistance(like,like2,LOW_INDEX);
                         System.out.println(Scanner.info() +"_"+distance1+"_"+distance2);
                         if (distance2==-1) similar=0;
                         else
@@ -347,8 +358,8 @@ public class CompareFactory {
         if (suffixList.size()==0) suffixList.add("java");
 
         fs.setSuffixList(suffixList);
-        fs.setJavaDictionary("/home/hjs/code_compare/src/dictionary");
-        if (!comment) fs.disableComment();
+        fs.setJavaDictionary(dictionary_path);
+        if (!COMMENT) fs.disableComment();
 
         fs.find(path,1);
         for (CodeFile Scanner:fs.getCodeFiles()) {
@@ -478,5 +489,13 @@ public class CompareFactory {
     }
 
     public void setSpace(boolean space) {
+    }
+
+    public static String getExPath() {
+        return exPath;
+    }
+
+    public String getVizPath() {
+        return vizPath;
     }
 }
