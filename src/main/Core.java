@@ -80,7 +80,7 @@ public class Core {
         String[] paths = new String[projectSize];
 //        for (int i = 0; i < projectSize; i++)
 //            paths[i] = selectFolder();
-        paths[0]="/media/hjs/KINGSTON/check/predict";
+        paths[0]="/media/hjs/KINGSTON/check/jsp-server";
         paths[1]="/media/hjs/KINGSTON/check/jsp-lab";
         double result = 0;
         try {
