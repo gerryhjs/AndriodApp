@@ -1,4 +1,4 @@
-package core;
+package compare_core;
 
 import java.util.ArrayList;
 

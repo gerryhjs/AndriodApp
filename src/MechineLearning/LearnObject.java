@@ -8,4 +8,12 @@ public class LearnObject {
     private CompareFactory myObject;
     private ArrayList<Double> learningIndex;
 
+    public void setMyObject()
+    {
+
+    }
+    public double work()
+    {
+        return 0;
+    }
 }

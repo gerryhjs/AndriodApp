@@ -1,7 +1,7 @@
 //package Tester;
 //
-//import core.CodeCompare;
-//import core.StringCompare;
+//import compare_core.CodeCompare;
+//import compare_core.StringCompare;
 //import file_core.CodeFile;
 //import file_core.FolderScanner;
 //import graphViz.GraphVizTest;

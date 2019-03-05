@@ -1,6 +1,6 @@
 package calc_map;
 
-import core.CodeCompare;
+import compare_core.CodeCompare;
 import file_core.CodeFile;
 
 import java.util.HashMap;

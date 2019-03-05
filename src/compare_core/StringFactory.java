@@ -1,4 +1,4 @@
-package core;
+package compare_core;
 
 /**
  * Created by Saika on 2019/1/2.
