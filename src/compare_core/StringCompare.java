@@ -33,7 +33,7 @@ public class StringCompare {
                 }
             }
 //            for (int i=0;i<keys.size();i++) {
-//                System.out.println(keys.get(i)+":"+index[i]);
+//                //System.out.println(keys.get(i)+":"+index[i]);
 //            }
             for (int i = 0; i < s2.length(); i++) {
                 int place = keys.indexOf(String.valueOf(s2.charAt(i)));
@@ -47,7 +47,7 @@ public class StringCompare {
             }
             double diff = 0;
             for (int i = 0; i < keys.size(); i++) {
-                System.out.println(keys.get(i) + ":" + index[i]);
+                ////System.out.println(keys.get(i) + ":" + index[i]);
                 diff += Math.abs(index[i]);
             }
             return 1-(diff)/Math.max(s1.length(), s2.length());

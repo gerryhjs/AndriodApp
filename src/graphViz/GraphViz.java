@@ -42,7 +42,7 @@ class  GraphViz{
         runOrder+="-o ";
         runOrder+=runPath;
         runOrder+="\\"+resultGif+".gif";
-        System.out.println(runOrder);
+        //System.out.println(runOrder);
     }
 
     public void writeGraphToFile(String dotcode, String filename) {

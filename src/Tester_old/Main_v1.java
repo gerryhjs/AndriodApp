@@ -20,8 +20,8 @@
 //    public void jsonTest()
 //    {
 //        String s="{\"table\": \"1\",\"id\": \"1_mcu\",\"threshold_memory\": \"60\",\"threshold_cpu\": \"95\"}";
-//        System.out.println(getValue(s,"table"));
-//        System.out.println(getValue(s,"id"));
+//        //System.out.println(getValue(s,"table"));
+//        //System.out.println(getValue(s,"id"));
 //    }
 //    @Test
 //    public void arrayTest()
@@ -29,7 +29,7 @@
 //        ArrayList<String> test=new ArrayList<>();
 //        test.add("a");
 //        test.add("b");
-//        System.out.println(test.toString());
+//        //System.out.println(test.toString());
 //    }
 //    private String getValue(String json, String attr)
 //    {

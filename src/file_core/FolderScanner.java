@@ -44,7 +44,7 @@ public class FolderScanner {
     {
         FileStreamer fs=new FileStreamer(new File(path));
         String s=fs.input();
-        System.out.println(s);
+        //System.out.println(s);
         if (s==null) return;
         dictionary=  s.split(",");
     }
@@ -52,25 +52,21 @@ public class FolderScanner {
         File dirFile = new File(pathName);
         //finds.add(dirFile);
         if (!dirFile.exists()) {
-         //   System.out.println("do not exit");
+         //   //System.out.println("do not exit");
             return;
         }
         if (!dirFile.isDirectory()) {
             if (dirFile.isFile()) {
-                try {
-                    System.out.println(dirFile.getCanonicalFile());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                //System.out.println(dirFile.getCanonicalFile());
             }
             return;
         }
 
         for (int j = 0; j < depth; j++) {
-            System.out.print("  ");
+            //System.out.print("  ");
         }
-        System.out.print("|--");
-        System.out.println(dirFile.getName());
+        //System.out.print("|--");
+        //System.out.println(dirFile.getName());
         String[] fileList = dirFile.list();
         int currentDepth=depth+1;
         assert fileList != null;
@@ -82,11 +78,11 @@ public class FolderScanner {
                 find(file.getCanonicalPath(),currentDepth);
             }else{
                 for (int j = 0; j < currentDepth; j++) {
-                    System.out.print("   ");
+                    //System.out.print("   ");
                 }
-                System.out.print("|--");
-                System.out.print("["+depth+"]");
-                System.out.println(name);
+                //System.out.print("|--");
+                //System.out.print("["+depth+"]");
+                //System.out.println(name);
                 if (pd(file)) {
                     for (String suffix:suffixList) {
                         if (!finds.contains(file.getName().replace(suffix, ""))) {
@@ -105,6 +101,11 @@ public class FolderScanner {
 
     public static boolean pd(File file)
     {
+        if (suffixList==null)
+        {
+            suffixList=new ArrayList<>();
+            suffixList.add("java");
+        }
         for (String Scanner:suffixList)
         {
             if (file.getName().endsWith("."+Scanner)) return true;

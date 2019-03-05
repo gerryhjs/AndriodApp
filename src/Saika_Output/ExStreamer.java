@@ -82,7 +82,7 @@ public class ExStreamer {
                 {
                     try {
                         String txt = sheet.getCell(j, i).getContents();
-                        System.out.println(i + "_" + j + ":" + txt);
+                        //System.out.println(i + "_" + j + ":" + txt);
                         //if (txt.length()==0) continue;
                     }
                     catch (Exception ignored)
@@ -268,7 +268,7 @@ public class ExStreamer {
 //                    try {
 //                        String txt = sheet.getCell(j, i).getContents();
 //                        s.add(txt);
-//                        System.out.println(i + "_" + j + ":" + txt);
+//                        //System.out.println(i + "_" + j + ":" + txt);
 //                        //if (txt.length()==0) continue;
 //                    }
 //                    catch (Exception ignored)

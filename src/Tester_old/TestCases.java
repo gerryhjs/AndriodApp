@@ -31,7 +31,7 @@
 //            Scanner.setIndex(0);
 //        for (CodeFile Scanner:fs.getCodeFiles()) {
 //            String nowPackage=Scanner.getPackageName();
-//            System.out.println("["+nowPackage+"]"+Scanner.getFileName());
+//            //System.out.println("["+nowPackage+"]"+Scanner.getFileName());
 //            String code=Scanner.getCode();
 //            for (CodeFile Scanner2:fs.getCodeFiles()) {
 //                String target=Scanner2.getName();
@@ -70,7 +70,7 @@
 //                            "[label=\"" + type + "\"]");
 //                    }
 //                }
-//            System.out.println();
+//            //System.out.println();
 //            }
 //
 //        GraphVizTest gvt=new GraphVizTest();
@@ -81,7 +81,7 @@
 ////            for (CodeFile Scanner:fs.getCodeFiles())
 ////            {
 ////                String nowPackage=Scanner.getPackageName();
-////           //     System.out.println("["+nowPackage+"]"+Scanner.getFileName()+" -R:"+Scanner.getRelateIndex()+" -U:"+Scanner.getUseIndex()+" -C:"+Scanner.getCreateIndex());
+////           //     //System.out.println("["+nowPackage+"]"+Scanner.getFileName()+" -R:"+Scanner.getRelateIndex()+" -U:"+Scanner.getUseIndex()+" -C:"+Scanner.getCreateIndex());
 ////            }
 //    }
 //
@@ -119,7 +119,7 @@
 //                "    }";
 //        String regex="[^a-zA-Z0-9.()]";
 //        String[] result=test.split(regex);
-//        System.out.println(Arrays.toString(result));
+//        //System.out.println(Arrays.toString(result));
 //    }
 //    @Test
 //    public void test3()
@@ -127,7 +127,7 @@
 //        String s1="bacdfe";
 //        String s2="abcde";
 //        StringCompare sc=new StringCompare(s1,s2);
-//        System.out.println(sc.work(1));
+//        //System.out.println(sc.work(1));
 //    }
 //
 //    @Test
@@ -135,22 +135,22 @@
 //    {
 //        CodeFile cf1=new CodeFile(new File("D:\\S1.java"));
 //        CodeFile cf2=new CodeFile(new File("D:\\User.java"));
-//        //System.out.println(Arrays.toString(cf1.getCodes()));
-//        //System.out.println(Arrays.toString(cf2.getCodes()));
+//        ////System.out.println(Arrays.toString(cf1.getCodes()));
+//        ////System.out.println(Arrays.toString(cf2.getCodes()));
 //        double result=new CodeCompare(cf1,cf2).work();
-//        System.out.println("Similar:"+result);
+//        //System.out.println("Similar:"+result);
 //    }
 //    @Test
 //    public void test5()
 //    {
 //        HashMap<Integer,Double> test=new HashMap<>();
 //        test.put(1,2d);
-//        System.out.println(test.get(1));
-//        System.out.println(test.get(2));
+//        //System.out.println(test.get(1));
+//        //System.out.println(test.get(2));
 //        test.put(1,3d);
-//        System.out.println(test.get(1));
+//        //System.out.println(test.get(1));
 //        test.put(2,3d);
 //        Set<Integer> s=test.keySet();
-//        System.out.println(Arrays.toString(s.toArray()));
+//        //System.out.println(Arrays.toString(s.toArray()));
 //    }
 //}

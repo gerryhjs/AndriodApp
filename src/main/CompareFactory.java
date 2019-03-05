@@ -23,7 +23,7 @@ public abstract  class CompareFactory {
     private static DecimalFormat df = new DecimalFormat("#.00");
 
     public static ArrayList<String> suffixList=new ArrayList<>();
-    public static boolean createDiagram=true;
+    public static boolean createDiagram=false;
     public static boolean byLines=false;
     public static boolean bySize=false;
     public static double adj_dis=1;
@@ -45,7 +45,7 @@ public abstract  class CompareFactory {
 
     public static void init()
     {
-        createDiagram=true;
+        createDiagram=false;
         byLines=false;
         bySize=false;
         adj_dis=1;
@@ -78,8 +78,8 @@ public abstract  class CompareFactory {
         paths[1]=path1;
         double result = 0;
         result = compare(paths[0], paths[1], 1d);
-        System.out.println();
-        System.out.println("Result->" + df.format(result * 100) + "%");
+        ////System.out.println();
+        ////System.out.println("Result->" + df.format(result * 100) + "%");
         return (df.format(result * 100) + "%");
     }
 
@@ -184,7 +184,7 @@ public abstract  class CompareFactory {
             index++;
 
 
-            System.out.println("Looking For->"+Scanner.info() +"====="+index+"/"+v1.size());
+            ////System.out.println("Looking For->"+Scanner.info() +"====="+index+"/"+v1.size());
             Vertex result=null;
             double max_similar=0;
 
@@ -198,12 +198,11 @@ public abstract  class CompareFactory {
                 }
             }
             if (result!=null) {
-                System.out.println("Result:" + result.info() + "-" + df
-                        .format(max_similar * 100) + "%");
+                ////System.out.println("Result:" + result.info() + "-" + df.format(max_similar * 100) + "%");
             }
             else
             {
-                System.out.println("Result:NULL");
+                ////System.out.println("Result:NULL");
             }
             likely.put(Scanner, result);
             values[index - 1][0] = Scanner.info();
@@ -238,7 +237,7 @@ public abstract  class CompareFactory {
             index++;
             Vertex like=likely.get(Scanner);
             try {
-                System.out.println(Scanner.info() + "=" + like.info());
+                ////System.out.println(Scanner.info() + "=" + like.info());
             }catch (Exception ignored) {
 
             }
@@ -254,7 +253,7 @@ public abstract  class CompareFactory {
                         double distance1 = m1.getDistance(Scanner,v,LOW_INDEX);
                         Vertex like2 = likely.get(v);
                         double distance2=m2.getDistance(like,like2,LOW_INDEX);
-                        System.out.println(Scanner.info() +"_"+distance1+"_"+distance2);
+                        ////System.out.println(Scanner.info() +"_"+distance1+"_"+distance2);
                         if (distance2==-1) similar=0;
                         else
                         {
@@ -268,14 +267,14 @@ public abstract  class CompareFactory {
 //                            if (diff<=sumDis*0.03+1) similar=0.9;
 //                            if (diff<=sumDis*0.01+1) similar=1;
 
-                            System.out.println("S="+similar);
+                            ////System.out.println("S="+similar);
 
                         }
                         sum+=similar;//*(Scanner.similar(like));//+((Vertex)Scanner2).similar(like2)
 
                     }catch (Exception e)
                     {
-                        System.out.println(e);
+                        //System.out.println(e);
                     }
                 }
 //                double edge_MaxS=1d;
@@ -285,7 +284,7 @@ public abstract  class CompareFactory {
                     else max_similar2=0;
 //                    if (max_similar>edge_MaxS)
 //                        max_similar=edge_MaxS;
-                    System.out.println(max_similar2);
+                    //System.out.println(max_similar2);
                     values[index - 1][3] = df.format(max_similar2 * 100) + "%";
 
                     if (byLines)  weightIndex+=Scanner.getCf().getLines();
@@ -309,8 +308,8 @@ public abstract  class CompareFactory {
 //            }
         }
 
-       // System.out.println(attrs.size());
-    //    System.out.println(sumSimilar2+"_"+weightIndex);
+       // //System.out.println(attrs.size());
+    //    //System.out.println(sumSimilar2+"_"+weightIndex);
 
         double similar2;
         if (weightIndex<=0) weightIndex=1;
@@ -321,14 +320,14 @@ public abstract  class CompareFactory {
 
         if (similar2>1) similar2=1;
 
-        System.out.println("SS:"+similar1+"-|-"+similar2);
+        //System.out.println("SS:"+similar1+"-|-"+similar2);
         double result=(similar1+similar2*weight_edge)/(1+weight_edge);
 //        values[v1.size()][2]= String.valueOf(similar1);
 //        values[v1.size()][3]= String.valueOf(similar2);
 //        values[v1.size()][4]= String.valueOf(result);
 
         ArrayList<String> attrs=new ArrayList<>();
-        System.out.println(similar1+"_"+similar2);
+        //System.out.println(similar1+"_"+similar2);
         attrs.add("origin");
         attrs.add("similar_target");
         attrs.add("vertex_Similar");
@@ -365,17 +364,17 @@ public abstract  class CompareFactory {
         }
         for (CodeFile Scanner:fs.getCodeFiles()) {
             String nowPackage=Scanner.getPackageName();
-            System.out.println("["+nowPackage+"]"+Scanner.getFileName());
+            //System.out.println("["+nowPackage+"]"+Scanner.getFileName());
             String code=Scanner.getCode();
             for (CodeFile Scanner2:fs.getCodeFiles()) {
                 int times= scanFolder(Scanner, code, Scanner2);;
                 if (times>0) {
                     double weight=dis(times);//距离权重 1-1.25
                     m.getVertex(Scanner.getFileName()).Relate(m.getVertex(Scanner2.getFileName()),weight);
-               //     System.out.println("MS"+m.getVertex(Scanner.getFileName()).getTo().size());
+               //     //System.out.println("MS"+m.getVertex(Scanner.getFileName()).getTo().size());
                 }
             }
-            System.out.println();
+            //System.out.println();
         }
         return m;
 
@@ -409,7 +408,7 @@ public abstract  class CompareFactory {
         }
         for (CodeFile Scanner:fs.getCodeFiles()) {
             String nowPackage=Scanner.getPackageName();
-            System.out.println("["+nowPackage+"]"+Scanner.getFileName());
+            //System.out.println("["+nowPackage+"]"+Scanner.getFileName());
             String code=Scanner.getCode();
             for (CodeFile Scanner2:fs.getCodeFiles()) {
                 int times=scanFolder(Scanner, code, Scanner2);
@@ -423,7 +422,7 @@ public abstract  class CompareFactory {
 //                            "[label=\"" + type + "\"]");
                 }
             }
-            System.out.println();
+            //System.out.println();
         }
 
 

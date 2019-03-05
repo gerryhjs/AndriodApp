@@ -88,7 +88,7 @@ public class CodeFile {
 //        String[] codex=s.split("\r\n");
 //        codes=codex;
 //        for (String Scanner:codex) {
-//       //System.out.println(Scanner);
+//       ////System.out.println(Scanner);
 //            if (removeSpace)
 //                Scanner=removeSign(Scanner);
 //            code.append(Scanner);
@@ -104,9 +104,9 @@ public class CodeFile {
 ////                    .replace(";","").length()>0)
 ////                codes.add(Scanner);
 //        }
-//       // System.out.println("====================");
+//       // //System.out.println("====================");
 //        //for (String Scanner:codes)
-//          //  System.out.println(Scanner);
+//          //  //System.out.println(Scanner);
 //    }
     //
     CodeFile(File file,String[] dictionary) { //    private double LOW_DOWN=1;
@@ -141,7 +141,7 @@ public class CodeFile {
         String[] codex=s.split("\r\n");
         codes=codex;
         for (String Scanner:codex) {
-            //System.out.println(Scanner);
+            ////System.out.println(Scanner);
 
             code.append(Scanner);
             size+=Scanner.length();
@@ -156,9 +156,9 @@ public class CodeFile {
 //                    .replace(";","").length()>0)
 //                codes.add(Scanner);
         }
-        // System.out.println("====================");
+        // //System.out.println("====================");
         //for (String Scanner:codes)
-        //  System.out.println(Scanner);
+        //  //System.out.println(Scanner);
     }
     private String deal(String s)
     {
@@ -167,7 +167,7 @@ public class CodeFile {
         {
             s=s.replace(Scanner,"*");
         }
-       // System.out.println(s);
+       // //System.out.println(s);
         return s;
 
     }

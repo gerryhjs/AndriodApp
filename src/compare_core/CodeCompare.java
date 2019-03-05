@@ -65,7 +65,7 @@ public class CodeCompare {
                 {
                     if (Scanner2.length()>0) {
                         double temp = new StringCompare(Scanner, Scanner2).work(1);
-                        //System.out.println(Scanner + "<->" + Scanner2 + ":"+ temp);
+                        ////System.out.println(Scanner + "<->" + Scanner2 + ":"+ temp);
                         if (temp > 1) temp = 1;
                         temp = Math.pow(temp, 1);
                       //  similar = Math.max(similar, temp);
@@ -76,14 +76,14 @@ public class CodeCompare {
                         }
                     }
                 }
-                System.out.println(ans+":"+similar);
-                //System.out.println(similar);
+                ////System.out.println(ans+":"+similar);
+                ////System.out.println(similar);
                 sum+=similar;
             }
         }
 
         if (index==0) index=1;
-        //System.out.println("S_"+sum+"_"+index);
+        ////System.out.println("S_"+sum+"_"+index);
         return sum/index;
     }
 

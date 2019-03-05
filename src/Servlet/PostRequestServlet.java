@@ -24,7 +24,7 @@ public class PostRequestServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		String input = request.getParameter("input");
-		System.out.println("input=" + input);
+		//System.out.println("input=" + input);
 		int mode=0;
 		String path1="";
 		String path2="";
@@ -37,7 +37,7 @@ public class PostRequestServlet extends HttpServlet {
 			threshold = Double.parseDouble(getValue(input, "threshold"));
 			weight = Double.parseDouble(getValue(input, "weight"));
 		}catch (Exception e) {
-			//System.out.println(e.toString());
+			////System.out.println(e.toString());
 		}
 		/*对照表
 		$("#code").val(
@@ -92,7 +92,7 @@ public class PostRequestServlet extends HttpServlet {
 
 
 		String reply="";
-		System.out.println(mode+"_"+path1+"_"+path2+"_"+threshold+"_"+weight);
+		//System.out.println(mode+"_"+path1+"_"+path2+"_"+threshold+"_"+weight);
 
 
 		if (mode==1)
@@ -101,15 +101,15 @@ public class PostRequestServlet extends HttpServlet {
 		}
 		if (mode==2)
 		{
-			reply= String.valueOf(CompareFactory.compare(path1,threshold,weight));
+			reply= String.valueOf(CompareFactory.compare_inGroup(path1,threshold,weight));
 		}
 		if (mode==3)
 		{
-			reply= String.valueOf(CompareFactory.compare2(path1,path2,weight));
+			reply= String.valueOf(CompareFactory.compare_oneToGroup(path1,path2,weight));
 		}
 		if (mode==4)
 		{
-			reply=String.valueOf(CompareFactory.compare(path1,path2,threshold,weight));
+			reply=String.valueOf(CompareFactory.compare_betweenGroup(path1,path2,threshold,weight));
 		}
 		if (mode==0)
 		{
@@ -119,7 +119,7 @@ public class PostRequestServlet extends HttpServlet {
 
 
 
-		System.out.println("output=" + reply);
+		//System.out.println("output=" + reply);
 
 		out.write(reply);
 		out.close();
@@ -131,8 +131,8 @@ public class PostRequestServlet extends HttpServlet {
 	{
 		String test="input=mode:{mode};file1:{file1};file2:{file2};threshold:0.6;weight:1;\n" +
 				"smartCompare:True;sizeWeight:False;reduceIndex:Default";
-		System.out.println(getValue(test,"threshold"));
-		System.out.println(getValue(test,"score"));
+		//System.out.println(getValue(test,"threshold"));
+		//System.out.println(getValue(test,"score"));
 	}
 	private String getValue(String data, String attr)
 	{
