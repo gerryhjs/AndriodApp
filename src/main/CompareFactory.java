@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Saika on 2019/1/12.
  */
-public class Core {
+public class CompareFactory {
     private DecimalFormat df = new DecimalFormat("#.00");
 
     private double check=0.6;
