@@ -26,9 +26,12 @@ public abstract  class CompareFactory {
     public static boolean createDiagram=false;
     public static boolean byLines=false;
     public static boolean bySize=false;
+
     public static double adj_dis=1;
     public static double pow_dis=1;
+    public static double weight_edge=1;
     public static double check_threshold =0.6;
+    public static double threshold=0.6;
 
     private static final boolean COMMENT=true;
     private static final double LOW_INDEX=1;
@@ -50,9 +53,11 @@ public abstract  class CompareFactory {
         bySize=false;
         adj_dis=1;
         pow_dis=1;
+        weight_edge=1;
         check_threshold =0.6;
         suffixList=new ArrayList<>();
         suffixList.add("java");
+        threshold=0.6;
     }
 
     public static String getGraphVizPath() {
@@ -72,24 +77,17 @@ public abstract  class CompareFactory {
     }
 
     public static String test_compare2(){
+        init();
         int projectSize = 2;
         String[] paths = new String[projectSize];
         paths[0]=path0;
         paths[1]=path1;
         double result = 0;
-        result = compare(paths[0], paths[1], 1d);
+        result = compare(paths[0], paths[1]);
         ////System.out.println();
         ////System.out.println("Result->" + df.format(result * 100) + "%");
         return (df.format(result * 100) + "%");
     }
-
-
-
-
-
-
-
-
 
 
 //
@@ -99,9 +97,16 @@ public abstract  class CompareFactory {
 //        return (compare(,0,1));
 //    }
 
+    public static boolean compare(String path0,String path1,double w,double p,double ch,double th)
+    {
+        pow_dis=p;
+        check_threshold=ch;
+        weight_edge=w;
+        threshold=th;
+        return compare(path0,path1)>threshold;
+    }
 
-
-    public static double compare(String path0, String path1, double weight_edge)//1-1
+    public static double compare(String path0, String path1)//1-1
     {
         int projectSize = 2;
         String[] paths = new String[projectSize];
@@ -116,12 +121,12 @@ public abstract  class CompareFactory {
 
         if (projects[0] != null) {
             if (projects[1] != null) {
-                return compareDiagram(projects[0],projects[1],weight_edge);
+                return compareDiagram(projects[0],projects[1]);
             }
         }
         return 0;
     }
-    public static double compare_oneToGroup(String path1,String path2,double weight_edge)//1-N
+    public static double compare_oneToGroup(String path1,String path2)//1-N
     {
         double similar = 0;
         String[] paths=new File(path2).list();
@@ -129,18 +134,18 @@ public abstract  class CompareFactory {
         for(String Scanner2:paths) {
             if (createDiagram)
                 check_draw(Scanner2);
-            similar = Math.max(compare(path1, Scanner2, weight_edge),similar);
+            similar = Math.max(compare(path1, Scanner2),similar);
         }
         return similar;
     }
 
 
-    public static String compare_inGroup(String path,double threshold,double weight_edge)//N
+    public static String compare_inGroup(String path)//N
     {
-        return compare_betweenGroup(path,path,threshold,weight_edge);
+        return compare_betweenGroup(path,path);
     }
 
-    public static String compare_betweenGroup(String path1, String path2, double threshold, double weight_edge)//N-N
+    public static String compare_betweenGroup(String path1, String path2)//N-N
     {
         if (!path1.endsWith("File.separator")) path1 += File.separator;
         if (!path2.endsWith("File.separator")) path2 += File.separator;
@@ -158,7 +163,7 @@ public abstract  class CompareFactory {
             for(String Scanner2:paths2) {
                 double similar = 0;
                 if (!Scanner1.equals(Scanner2)) {
-                    similar = compare(path1+Scanner1, path2+Scanner2, weight_edge);
+                    similar = compare(path1+Scanner1, path2+Scanner2);
                     if (similar > threshold)
                         result.append(Scanner1).append("-").append(Scanner2).append(":").append(similar).append(";<br/>");
                 }
@@ -167,7 +172,7 @@ public abstract  class CompareFactory {
         return result.toString();
     }
 
-    public static double compareDiagram(Diagram m1, Diagram m2, double weight_edge)
+    public static double compareDiagram(Diagram m1, Diagram m2)
     {
         //思路：匹配点 比较边权值  或者比较边后匹配点？
         // 得出结论 单向匹配z

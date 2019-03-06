@@ -59,6 +59,8 @@ public class PostRequestServlet extends HttpServlet {
 
 		 */
 		CompareFactory.init();
+		CompareFactory.weight_edge=weight;
+		CompareFactory.threshold=threshold;
 		try {
 			String value=getValue(input,"codeSuffix");
 			if (!value.equals(""))
@@ -95,21 +97,23 @@ public class PostRequestServlet extends HttpServlet {
 		//System.out.println(mode+"_"+path1+"_"+path2+"_"+threshold+"_"+weight);
 
 
+
 		if (mode==1)
 		{
-			reply= df.format(CompareFactory.compare(path1, path2, weight) * 100) + "%";
+			CompareFactory.weight_edge=weight;
+			reply= df.format(CompareFactory.compare(path1, path2) * 100) + "%";
 		}
 		if (mode==2)
 		{
-			reply= String.valueOf(CompareFactory.compare_inGroup(path1,threshold,weight));
+			reply= String.valueOf(CompareFactory.compare_inGroup(path1));
 		}
 		if (mode==3)
 		{
-			reply= String.valueOf(CompareFactory.compare_oneToGroup(path1,path2,weight));
+			reply= String.valueOf(CompareFactory.compare_oneToGroup(path1,path2));
 		}
 		if (mode==4)
 		{
-			reply=String.valueOf(CompareFactory.compare_betweenGroup(path1,path2,threshold,weight));
+			reply=String.valueOf(CompareFactory.compare_betweenGroup(path1,path2));
 		}
 		if (mode==0)
 		{
