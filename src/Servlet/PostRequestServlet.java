@@ -119,8 +119,6 @@ public class PostRequestServlet extends HttpServlet {
 		}
 		//deal
 
-
-
 		//System.out.println("output=" + reply);
 
 		out.write(reply);
