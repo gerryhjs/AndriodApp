@@ -6,55 +6,55 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
-public class LearnProject {
+public abstract class LearnProject {
 
-    private ArrayList<LearnData> myDatas;
-    private double edge_weight;
+    private static ArrayList<LearnData> myDatas;
+    private static double edge_weight;
 //    private double adj_dis;
-    private double pow_dis;
+    private static double pow_dis;
 //    private double threshold;
-    private double check_threshold;
+    private static double check_threshold;
 
 
-    private double edge_weight_step;
+    private static double edge_weight_step;
     private int edge_weight_direct=0;
 
-    private double edge_weight_limit1=0;
-    private double edge_weight_limit2=2;
-    private double pow_dis_limit1=0;
-    private double pow_dis_limit2=2;
-    private double check_threshold_limit1=0.3;
-    private double check_threshold_limit2=0.8;
-    private double threshold_limit1=0.3;
-    private double threshold_limit2=0.8;
+    private static double edge_weight_limit1=0;
+    private static double edge_weight_limit2=2;
+    private static double pow_dis_limit1=0;
+    private static double pow_dis_limit2=2;
+    private static double check_threshold_limit1=0.3;
+    private static double check_threshold_limit2=0.8;
+    private static double threshold_limit1=0.3;
+    private static double threshold_limit2=0.8;
 
-    private double pow_dis_step;
-    private int pow_dis_direct=0;
+    private static double pow_dis_step;
+//    private int pow_dis_direct=0;
 
 
-    private  double check_threshold_step;
-    private int check_threshold_direct=0;
+    private static double check_threshold_step;
+//    private int check_threshold_direct=0;
 
-    private final double approachIndex=2;
-    private final double stepIndex=0.01;
+    private static final double approachIndex=2;
+//    private final double stepIndex=0.01;
 
-    private HashMap<Vector<Double>, Double> map;
-    ArrayList<Double>  edge_weight_list;
-    ArrayList<Double> pow_dis_list;
-    ArrayList<Double> check_threshold_list;
-    ArrayList<Double> threshold_list;
+    private static HashMap<Vector<Double>, Double> map;
+    static ArrayList<Double>  edge_weight_list;
+    static ArrayList<Double> pow_dis_list;
+    static ArrayList<Double> check_threshold_list;
+    static ArrayList<Double> threshold_list;
 
-    private final double allowDiff=0.5;//为正限制 为负放宽
-    private double step;
-    private double threshold=0.5;
-    private double threshold_step;
+    private static final double allowDiff=0.5;//为正限制 为负放宽
+    private static double step;
+    private static double threshold=0.5;
+    private static double threshold_step;
 
-    private int threshold_direct=0;
+//    private int threshold_direct=0;
 
-    private double edge_weight_key;
-    private double pow_dis_key;
-    private double check_threshold_key;
-    private double threshold_key;
+    private static double edge_weight_key;
+    private static double pow_dis_key;
+    private static double check_threshold_key;
+    private static double threshold_key;
 
 //    private final double threshold_limit1=0.5;
 //    private final double threshold_limit2=0.8;
@@ -69,13 +69,9 @@ public class LearnProject {
 //    private int adj_dis_direct=0;
 
 
-    private double result;
-    private boolean isSimilar;
+    private static final double expansion=1d;
 
-    private double accurate;
-    private final double expansion=1d;
-
-    public void init()
+    public static void init()
     {
         edge_weight_limit1=0;
         edge_weight_limit2=2;
@@ -85,6 +81,8 @@ public class LearnProject {
         check_threshold_limit2=0.8;
         threshold_limit1=0.3;
         threshold_limit2=0.8;
+        CompareFactory.init();
+        myDatas=new ArrayList<>();
     }
     public double getEdge_weight() {
         return edge_weight;
@@ -107,20 +105,19 @@ public class LearnProject {
     }
 
 
-    public LearnProject()
-    {
-        CompareFactory.init();
-        myDatas=new ArrayList<>();
-    }
+//    public void init()
+//    {
+//
+//    }
 
-    public void training(double step, int times)
+    public static void training(double step, int time)
     {
-        if (times==0)
+        if (time==0)
         {
             System.out.println(infoD());
             return;
         }
-        this.step=step;
+        LearnProject.step=step;
         edge_weight_step=(edge_weight_limit2-edge_weight_limit1)/(step+1);
         pow_dis_step=(pow_dis_limit2-pow_dis_limit1)/(step+1);
         check_threshold_step=(check_threshold_limit2-check_threshold_limit1)/(step+1);
@@ -147,24 +144,24 @@ public class LearnProject {
                         check_threshold_list.add(check_threshold);
                         threshold_list.add(threshold);
                         int now= (int) ((i-1)*Math.pow(step,3)+(j-1)*Math.pow(step,2)+(k-1)*Math.pow(step,1)+l);
-                        System.out.println("["+times+"]:"+now+"/"+all+":");
+                        System.out.println("["+time+"]:"+now+"/"+all+":");
                         System.out.println(info());
                         double sumDiff=0;
                         for (LearnData Scanner:myDatas)
                         {
                             sumDiff+=getDiff(Scanner);
                         }
-                        accurate=deal(1-sumDiff/myDatas.size()*expansion);
+                        double accurate = deal(1 - sumDiff / myDatas.size() * expansion);
 //                        Vector<Double> v= new Vector<>(4);
 //                        v.addElement(edge_weight);
 //                        v.addElement(pow_dis);
 //                        v.addElement(check_threshold);
 //                        v.addElement(threshold);
 //                        map.put(v,result);
-                        System.out.println(accurate*100+"%");
-                        if (accurate>maxAcc)
+                        System.out.println(accurate *100+"%");
+                        if (accurate >maxAcc)
                         {
-                            maxAcc=accurate;
+                            maxAcc= accurate;
                             edge_weight_key=edge_weight;
                             pow_dis_key=pow_dis;
                             check_threshold_key=check_threshold;
@@ -179,7 +176,7 @@ public class LearnProject {
             check_threshold_limit2=check_threshold_key+check_threshold_step;
             threshold_limit1=threshold_key-threshold_step;
             threshold_limit2=threshold_key+threshold_step;
-            training(step,times-1);
+            training(step,time-1);
     }
 //    public void training(double times)
 //    {
@@ -190,34 +187,34 @@ public class LearnProject {
 //        }
 //    }
 
-    private double getResult(LearnData Scanner) {
+    private static double getResult(LearnData Scanner) {
         CompareFactory.init();
         CompareFactory.pow_dis=pow_dis;
         CompareFactory.check_threshold=check_threshold;
         CompareFactory.edge_weight =edge_weight;
         return CompareFactory.compare(Scanner.getPath0(), Scanner.getPath1());
     }
-    private double getDiff(LearnData Scanner)
+    private static double getDiff(LearnData Scanner)
     {
-        result = getResult(Scanner);
-        isSimilar =  Scanner.isSimilar();
+        double result = getResult(Scanner);
+        boolean isSimilar = Scanner.isSimilar();
         double diff;
 //        System.out.println("CalcSimilar:"+deal(result)+"/"+threshold);
 //        System.out.println("Fact:"+isSimilar);
         if (isSimilar)
         {
-            if (result>threshold+allowDiff) diff=0;
-            else diff=(threshold+allowDiff)-result;
+            if (result >threshold+allowDiff) diff=0;
+            else diff=(threshold+allowDiff)- result;
         }
         else
         {
-            if (result<threshold-allowDiff) diff=0;
-            else diff=result-(threshold-allowDiff);
+            if (result <threshold-allowDiff) diff=0;
+            else diff= result -(threshold-allowDiff);
         }
 //        System.out.println("Diff:"+deal(diff));
         return Math.pow(diff,approachIndex);
     }
-    public Double deal(double input)
+    public static Double deal(double input)
     {
         return  input;
 //        BigDecimal b = new BigDecimal(input);
@@ -230,14 +227,14 @@ public class LearnProject {
 //    }
 
     public void setMyDatas(ArrayList<LearnData> myDatas) {
-        this.myDatas = myDatas;
+        LearnProject.myDatas = myDatas;
     }
-    public void addData(String path0,String path1,boolean similar)
+    public static void addData(String path0, String path1, boolean similar)
     {
-        this.myDatas.add(new LearnData(path0,path1,similar));
+        LearnProject.myDatas.add(new LearnData(path0,path1,similar));
     }
 
-    public String info() {
+    public static String info() {
         /*
         this.edge_weight=edge_weight;
         this.adj_dis=adj_dis;
@@ -251,7 +248,7 @@ public class LearnProject {
                 "\ncheck_threshold:["+check_threshold_limit1+"]/"+check_threshold+"/["+check_threshold_limit2+"]";
     }
 
-    public String infoD() {
+    public static String infoD() {
         /*
         this.edge_weight=edge_weight;
         this.adj_dis=adj_dis;

@@ -37,13 +37,13 @@ public class TestList {
         String path1="/media/hjs/KINGSTON/check/jsp-lab";
         String path2="/media/hjs/KINGSTON/check/saikaDL24";
         String path3="/media/hjs/KINGSTON/check/Predict";
-        LearnProject lp=new LearnProject();
-        lp.addData(path0,path1,true);
-        lp.addData(path1,path0,false);
-        lp.addData(path0,path2,false);
-        lp.addData(path2,path3,false);
-        lp.addData(path3,path2,true);
-        lp.training(2,10);
+        LearnProject.init();
+        LearnProject.addData(path0,path1,true);
+        LearnProject.addData(path1,path0,false);
+        LearnProject.addData(path0,path2,false);
+        LearnProject.addData(path2,path3,false);
+        LearnProject.addData(path3,path2,true);
+        LearnProject.training(2,10);
 
     }
 }
