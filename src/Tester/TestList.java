@@ -43,7 +43,7 @@ public class TestList {
         LearnProject.addData(path0,path2,false);
         LearnProject.addData(path2,path3,false);
         LearnProject.addData(path3,path2,true);
-        LearnProject.training(2,10);
+        LearnProject.training(4,10);
 
     }
 }
