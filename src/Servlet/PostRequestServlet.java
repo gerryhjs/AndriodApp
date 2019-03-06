@@ -57,7 +57,7 @@ public class PostRequestServlet extends HttpServlet {
 
 		 */
 		CompareFactory.init();
-		CompareFactory.weight_edge=weight;
+		CompareFactory.edge_weight =weight;
 		CompareFactory.threshold=threshold;
 		try {
 			String value=getValue(input,"codeSuffix");
@@ -98,7 +98,7 @@ public class PostRequestServlet extends HttpServlet {
 
 		if (mode==1)
 		{
-			CompareFactory.weight_edge=weight;
+			CompareFactory.edge_weight =weight;
 			reply= df.format(CompareFactory.compare(path1, path2) * 100) + "%";
 		}
 		if (mode==2)

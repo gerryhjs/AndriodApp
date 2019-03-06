@@ -5,20 +5,20 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
-public class FileStreamer {
+public abstract class FileStreamer {
 //    private String filename;
-    private File file;
+//    private File file;
 //    public FileStreamer(String filename)
 //    {
 //        this.filename=filename;
 //        this.file=new File(filename);
 //    }
 
-    FileStreamer(File f) {
-        this.file=f;
-    }
+//    FileStreamer(File f) {
+//        this.file=f;
+//    }
 
-    public String input()
+    public static String input(File file)
     {
         try {
             InputStreamReader read= new InputStreamReader(new FileInputStream(file));

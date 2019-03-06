@@ -4,6 +4,7 @@ import Saika_Output.ExStreamer;
 import calc_map.Diagram;
 import calc_map.Vertex;
 import file_core.CodeFile;
+import file_core.FileStreamer;
 import file_core.FolderScanner;
 import graphViz.GraphVizTest;
 import java.io.File;
@@ -29,11 +30,11 @@ public abstract  class CompareFactory {
 
     private static double adj_dis=1;
     public static double pow_dis=1;
-    public static double weight_edge=1;
+    public static double edge_weight =1;
     public static double check_threshold =0.6;
     public static double threshold=0.6;
 
-    private static final boolean COMMENT=true;
+//    private static final boolean COMMENT=true;
     private static final double LOW_INDEX=1;
     private static final double BAS_DIS=1;
 
@@ -53,7 +54,7 @@ public abstract  class CompareFactory {
         bySize=false;
         adj_dis=1;
         pow_dis=1;
-        weight_edge=1;
+        edge_weight =1;
         check_threshold =0.6;
         suffixList=new ArrayList<>();
         suffixList.add("java");
@@ -100,7 +101,7 @@ public abstract  class CompareFactory {
     {
         pow_dis=p;
         check_threshold=ch;
-        weight_edge=w;
+        edge_weight =w;
         threshold=th;
         return compare(path0,path1)>threshold;
     }
@@ -323,7 +324,7 @@ public abstract  class CompareFactory {
         if (similar2>1) similar2=1;
 
         //System.out.println("SS:"+similar1+"-|-"+similar2);
-        double result=(similar1+similar2*weight_edge)/(1+weight_edge);
+        double result=(similar1+similar2* edge_weight)/(1+ edge_weight);
 //        values[v1.size()][2]= String.valueOf(similar1);
 //        values[v1.size()][3]= String.valueOf(similar2);
 //        values[v1.size()][4]= String.valueOf(result);
@@ -344,31 +345,30 @@ public abstract  class CompareFactory {
         String[] temp=path.split("/");
         String name=temp[temp.length-1];
         Diagram m=new Diagram(name);
-        FolderScanner fs=new FolderScanner();
-
+//        FolderScanner fs=new FolderScanner();
+        FolderScanner.init();
         if (suffixList.size()==0)
         {
             return null;
         }
 
-        fs.setSuffixList(suffixList);
-        fs.setJavaDictionary(dictionary_path);
-        if (!COMMENT) fs.disableComment();
+        FolderScanner.setSuffixList(suffixList);
+//        if (!COMMENT) fs.disableComment();
         try {
-            fs.find(path,1);
+            FolderScanner.find(path,1);
         } catch (IOException ignored) {
 
         }
-        for (CodeFile Scanner:fs.getCodeFiles()) {
+        for (CodeFile Scanner:FolderScanner.getCodeFiles()) {
             Vertex v=new Vertex(Scanner);
             m.addVertex(v);
             Scanner.setIndex(0);
         }
-        for (CodeFile Scanner:fs.getCodeFiles()) {
+        for (CodeFile Scanner:FolderScanner.getCodeFiles()) {
 //            String nowPackage=Scanner.getPackageName();
             //System.out.println("["+nowPackage+"]"+Scanner.getFileName());
             String code=Scanner.getCode();
-            for (CodeFile Scanner2:fs.getCodeFiles()) {
+            for (CodeFile Scanner2:FolderScanner.getCodeFiles()) {
                 int times= scanFolder(Scanner, code, Scanner2);
                 if (times>0) {
                     double weight=dis(times);//距离权重 1-1.25
@@ -399,20 +399,21 @@ public abstract  class CompareFactory {
 
         ArrayList<String> Edges=new ArrayList<>();
       //  ArrayList<String> Edges2=new ArrayList<>();
-        FolderScanner fs=new FolderScanner();
+//        FolderScanner fs=new FolderScanner();
+        FolderScanner.init();
         try {
-            fs.find(path,1);
+            FolderScanner.find(path,1);
         } catch (IOException ignored) {
 
         }
-        for (CodeFile Scanner:fs.getCodeFiles()) {
+        for (CodeFile Scanner:FolderScanner.getCodeFiles()) {
             Scanner.setIndex(0);
         }
-        for (CodeFile Scanner:fs.getCodeFiles()) {
+        for (CodeFile Scanner:FolderScanner.getCodeFiles()) {
 //            String nowPackage=Scanner.getPackageName();
             //System.out.println("["+nowPackage+"]"+Scanner.getFileName());
             String code=Scanner.getCode();
-            for (CodeFile Scanner2:fs.getCodeFiles()) {
+            for (CodeFile Scanner2:FolderScanner.getCodeFiles()) {
                 int times=scanFolder(Scanner, code, Scanner2);
                 if (times>0) {
                     double weight=dis(times);//权重 1-1.25
@@ -479,6 +480,13 @@ public abstract  class CompareFactory {
             count++;
         }
         return count;
+    }
+
+    public static String[] getDictionary() {
+        String s= FileStreamer.input(new File(dictionary_path));
+        //System.out.println(s);
+        if (s==null) return null;
+        return s.split(",");
     }
 
 //

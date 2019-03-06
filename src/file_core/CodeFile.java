@@ -1,5 +1,7 @@
 package file_core;
 
+import main.CompareFactory;
+
 import java.io.File;
 
 /**
@@ -12,11 +14,11 @@ public class CodeFile {
     private String[] codes;
     private StringBuffer code;
     private int index;
-    private boolean removeComment=true;
+//    private boolean removeComment=true;
 //    private boolean removeSpace=true;
     private long size;
     private long lines;
-    private String[] dictionary;
+//    private String[] dictionary;
     //    private ArrayList<CodeFile> useTo;
 //    private ArrayList<CodeFile> useFrom;
 //    private ArrayList<CodeFile> createTo;
@@ -47,10 +49,10 @@ public class CodeFile {
 //
 //    }
 
-    public String getPackageName()
-    {
-        return packageName;
-    }
+//    public String getPackageName()
+//    {
+//        return packageName;
+//    }
     private void setPackageName(String packageName)
     {
         this.packageName=packageName;
@@ -109,7 +111,7 @@ public class CodeFile {
 //          //  //System.out.println(Scanner);
 //    }
     //
-    CodeFile(File file,String[] dictionary) { //    private double LOW_DOWN=1;
+    public CodeFile(File file) { //    private double LOW_DOWN=1;
         index=0;
         size=0;
         lines=0;
@@ -126,14 +128,13 @@ public class CodeFile {
         }
         //this.setName(fileName.replace(".java",""));
 
-        FileStreamer fs=new FileStreamer(file);
-        String s=fs.input();
-        if (removeComment)
-            s=removeComment(s);
+//        FileStreamer fs=new FileStreamer(file);
+        String s=FileStreamer.input(file);
+//        if (removeComment)
 
-        this.dictionary=dictionary;
 //        s=removeSign(s);
-
+//        this.dictionary=dictionary;
+        s=removeComment(s);
         s=removeTab(s);
         s=deal(s);
 
@@ -162,6 +163,7 @@ public class CodeFile {
     }
     private String deal(String s)
     {
+        String[] dictionary= CompareFactory.getDictionary();
         if (dictionary==null) return s;
         for (String Scanner:dictionary)
         {
@@ -222,9 +224,9 @@ public class CodeFile {
         this.index = index;
     }
 
-    public void setRemoveComment(boolean removeComment) {
-        this.removeComment = removeComment;
-    }
+//    public void setRemoveComment(boolean removeComment) {
+//        this.removeComment = removeComment;
+//    }
 
 
     public long getSize() {

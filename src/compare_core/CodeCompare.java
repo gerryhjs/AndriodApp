@@ -2,18 +2,17 @@ package compare_core;
 
 import file_core.CodeFile;
 
-public class CodeCompare {
-    private  String[] codes1;
-    private String[] codes2;
-    public CodeCompare(CodeFile cf1, CodeFile cf2)
-    {
-        codes1=cf1.getCodes();
-        codes2=cf2.getCodes();
-    }
+public abstract class CodeCompare {
+//    private  String[] codes1;
+//    private String[] codes2;
+//    public CodeCompare()
+//    {
+//
+//    }
 
-    public double work()
-    {
-        return compare(codes1,codes2);
+//    public double work(CodeFile cf1, CodeFile cf2)
+//    {
+//        return compare(cf1.getCodes(),cf2.getCodes());
        // return Math.max(compare(codes1,codes2),compare(codes2,codes1));
 
 //     if (mode==1)
@@ -32,8 +31,7 @@ public class CodeCompare {
 //            }
 //        return diff[codes1.length][codes2.length];
 //    }
-
-    }
+//    }
     public double min(double... input)
     {
         double ans=Double.MAX_VALUE;
@@ -49,39 +47,32 @@ public class CodeCompare {
         return ans;
     }
 
-    public double compare(String[] codes1,String[] codes2)
+    public static double work(CodeFile cf1, CodeFile cf2)
     {
+        String[] codes1=cf1.getCodes();
+        String[] codes2=cf2.getCodes();
         double sum=0;
         double index=0;
         for (String Scanner:codes1)
-        {
-
-            if (Scanner.length()>0)
-            {
+            if (Scanner.length() > 0) {
                 index++;
-                double similar=0;
-                String ans = null;
-                for(String Scanner2:codes2)
-                {
-                    if (Scanner2.length()>0) {
-                        double temp = new StringCompare(Scanner, Scanner2).work(1);
+                double similar = 0;
+                for (String Scanner2 : codes2) {
+                    if (Scanner2.length() > 0) {
+                        double temp = StringCompare.work(Scanner, Scanner2);
                         ////System.out.println(Scanner + "<->" + Scanner2 + ":"+ temp);
                         if (temp > 1) temp = 1;
                         temp = Math.pow(temp, 1);
-                      //  similar = Math.max(similar, temp);
-                        if (temp>similar)
-                        {
-                            similar=temp;
-                            ans = Scanner + "=>" + Scanner2;
+                        //  similar = Math.max(similar, temp);
+                        if (temp > similar) {
+                            similar = temp;
                         }
                     }
                 }
                 ////System.out.println(ans+":"+similar);
                 ////System.out.println(similar);
-                sum+=similar;
+                sum += similar;
             }
-        }
-
         if (index==0) index=1;
         ////System.out.println("S_"+sum+"_"+index);
         return sum/index;

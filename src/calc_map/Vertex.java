@@ -35,7 +35,7 @@ public class Vertex {
     {
         return Edges.keySet();
     }
-    public double  getDistance(Vertex another)
+    double  getDistance(Vertex another)
     {
         Object distance=Edges.get(another);
         if (distance!=null) return (double) distance;
@@ -45,7 +45,7 @@ public class Vertex {
 
     public double similar(Vertex another)
     {
-        return new CodeCompare(this.getCf(),another.getCf()).work();
+        return CodeCompare.work(this.getCf(),another.getCf());
     }
 
 }

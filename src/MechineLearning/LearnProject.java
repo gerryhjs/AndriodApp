@@ -2,7 +2,6 @@ package MechineLearning;
 
 import main.CompareFactory;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
@@ -195,7 +194,8 @@ public class LearnProject {
         CompareFactory.init();
         CompareFactory.pow_dis=pow_dis;
         CompareFactory.check_threshold=check_threshold;
-        return CompareFactory.compare(Scanner.getPath0(), Scanner.getPath1(), edge_weight);
+        CompareFactory.edge_weight =edge_weight;
+        return CompareFactory.compare(Scanner.getPath0(), Scanner.getPath1());
     }
     private double getDiff(LearnData Scanner)
     {

@@ -30,11 +30,11 @@ public class Diagram {
         return VertexList;
     }
 
-    public void tranArray()
-    {
-        int size=VertexList.size();
-        double[][] matrix=new double[size][size];
-    }
+//    public void tranArray()
+//    {
+//        int size=VertexList.size();
+//        double[][] matrix=new double[size][size];
+//    }
 
     public Vertex getVertex(String fileName)
     {
