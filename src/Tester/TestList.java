@@ -7,7 +7,7 @@ import org.junit.Test;
 public class TestList {
 
     @Test
-    public void Facotory_test()
+    public void Factory_test()
     {
         CompareFactory.init();
         CompareFactory.createDiagram=false;

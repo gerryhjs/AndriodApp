@@ -27,7 +27,7 @@ public abstract  class CompareFactory {
     public static boolean byLines=false;
     public static boolean bySize=false;
 
-    public static double adj_dis=1;
+    private static double adj_dis=1;
     public static double pow_dis=1;
     public static double weight_edge=1;
     public static double check_threshold =0.6;
@@ -38,7 +38,7 @@ public abstract  class CompareFactory {
     private static final double BAS_DIS=1;
 
     private static final String dictionary_path="/home/hjs/code_compare/src/dictionary";
-    private static final String target_path="/media/hjs/KINGSTON/check/";
+//    private static final String target_path="/media/hjs/KINGSTON/check/";
     private static final String path0="/media/hjs/KINGSTON/check/jsp-server";
     private static final String path1="/media/hjs/KINGSTON/check/jsp-lab";
 
@@ -82,8 +82,7 @@ public abstract  class CompareFactory {
         String[] paths = new String[projectSize];
         paths[0]=path0;
         paths[1]=path1;
-        double result = 0;
-        result = compare(paths[0], paths[1]);
+        double result = compare(paths[0], paths[1]);
         ////System.out.println();
         ////System.out.println("Result->" + df.format(result * 100) + "%");
         return (df.format(result * 100) + "%");
@@ -161,9 +160,8 @@ public abstract  class CompareFactory {
             }
 
             for(String Scanner2:paths2) {
-                double similar = 0;
                 if (!Scanner1.equals(Scanner2)) {
-                    similar = compare(path1+Scanner1, path2+Scanner2);
+                    double similar = compare(path1 + Scanner1, path2 + Scanner2);
                     if (similar > threshold)
                         result.append(Scanner1).append("-").append(Scanner2).append(":").append(similar).append(";<br/>");
                 }
@@ -172,7 +170,7 @@ public abstract  class CompareFactory {
         return result.toString();
     }
 
-    public static double compareDiagram(Diagram m1, Diagram m2)
+    private static double compareDiagram(Diagram m1, Diagram m2)
     {
         //思路：匹配点 比较边权值  或者比较边后匹配点？
         // 得出结论 单向匹配z
@@ -202,13 +200,13 @@ public abstract  class CompareFactory {
                     if (max_similar == 1) break;
                 }
             }
-            if (result!=null) {
-                ////System.out.println("Result:" + result.info() + "-" + df.format(max_similar * 100) + "%");
-            }
-            else
-            {
-                ////System.out.println("Result:NULL");
-            }
+//            if (result!=null) {
+//                ////System.out.println("Result:" + result.info() + "-" + df.format(max_similar * 100) + "%");
+//            }
+//            else
+//            {
+//                ////System.out.println("Result:NULL");
+//            }
             likely.put(Scanner, result);
             values[index - 1][0] = Scanner.info();
             if (result != null) {
@@ -241,11 +239,11 @@ public abstract  class CompareFactory {
         {
             index++;
             Vertex like=likely.get(Scanner);
-            try {
-                ////System.out.println(Scanner.info() + "=" + like.info());
-            }catch (Exception ignored) {
-
-            }
+//            try {
+//                ////System.out.println(Scanner.info() + "=" + like.info());
+//            }catch (Exception ignored) {
+//
+//            }
             if (like!=null)
             {
                 Set relates=Scanner.getTo();
@@ -271,7 +269,6 @@ public abstract  class CompareFactory {
 //                            if (diff<=sumDis*0.1+1) similar=0.8;
 //                            if (diff<=sumDis*0.03+1) similar=0.9;
 //                            if (diff<=sumDis*0.01+1) similar=1;
-
                             ////System.out.println("S="+similar);
 
                         }
@@ -368,11 +365,11 @@ public abstract  class CompareFactory {
             Scanner.setIndex(0);
         }
         for (CodeFile Scanner:fs.getCodeFiles()) {
-            String nowPackage=Scanner.getPackageName();
+//            String nowPackage=Scanner.getPackageName();
             //System.out.println("["+nowPackage+"]"+Scanner.getFileName());
             String code=Scanner.getCode();
             for (CodeFile Scanner2:fs.getCodeFiles()) {
-                int times= scanFolder(Scanner, code, Scanner2);;
+                int times= scanFolder(Scanner, code, Scanner2);
                 if (times>0) {
                     double weight=dis(times);//距离权重 1-1.25
                     m.getVertex(Scanner.getFileName()).Relate(m.getVertex(Scanner2.getFileName()),weight);
@@ -412,7 +409,7 @@ public abstract  class CompareFactory {
             Scanner.setIndex(0);
         }
         for (CodeFile Scanner:fs.getCodeFiles()) {
-            String nowPackage=Scanner.getPackageName();
+//            String nowPackage=Scanner.getPackageName();
             //System.out.println("["+nowPackage+"]"+Scanner.getFileName());
             String code=Scanner.getCode();
             for (CodeFile Scanner2:fs.getCodeFiles()) {
@@ -474,7 +471,7 @@ public abstract  class CompareFactory {
 //        return null;
 //    }
 
-    public static int appearNumber(String srcText, String findText) {
+    private static int appearNumber(String srcText, String findText) {
         int count = 0;
         Pattern p = Pattern.compile(findText);
         Matcher m = p.matcher(srcText);
@@ -484,23 +481,23 @@ public abstract  class CompareFactory {
         return count;
     }
 
-
-    public void setByLines(boolean byLines) {
-        this.byLines = byLines;
-    }
-
-    public void setBySize(boolean bySize) {
-        this.bySize = bySize;
-    }
-
-    public void setSuffixList(ArrayList<String> suffixList)
-    {
-        this.suffixList=suffixList;
-    }
-    public  void setCreateDiagram(boolean createDiagram) {
-        this.createDiagram = createDiagram;
-    }
-
+//
+//    public void setByLines(boolean byLines) {
+//        CompareFactory.byLines = byLines;
+//    }
+//
+//    public void setBySize(boolean bySize) {
+//        CompareFactory.bySize = bySize;
+//    }
+//
+//    public void setSuffixList(ArrayList<String> suffixList)
+//    {
+//        CompareFactory.suffixList =suffixList;
+//    }
+//    public  void setCreateDiagram(boolean createDiagram) {
+//        CompareFactory.createDiagram = createDiagram;
+//    }
+//
 
 
 }

@@ -2,8 +2,6 @@ package Servlet;
 
 
 import main.CompareFactory;
-import org.junit.Test;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -117,7 +115,7 @@ public class PostRequestServlet extends HttpServlet {
 		}
 		if (mode==0)
 		{
-			reply=String.valueOf(CompareFactory.test_compare2());
+			reply= CompareFactory.test_compare2();
 		}
 		//deal
 
@@ -130,14 +128,14 @@ public class PostRequestServlet extends HttpServlet {
 	}
 
 
-	@Test
-	public void test()
-	{
-		String test="input=mode:{mode};file1:{file1};file2:{file2};threshold:0.6;weight:1;\n" +
-				"smartCompare:True;sizeWeight:False;reduceIndex:Default";
-		//System.out.println(getValue(test,"threshold"));
-		//System.out.println(getValue(test,"score"));
-	}
+//	@Test
+//	public void test()
+//	{
+////		String test="input=mode:{mode};file1:{file1};file2:{file2};threshold:0.6;weight:1;\n" +
+////				"smartCompare:True;sizeWeight:False;reduceIndex:Default";
+//		//System.out.println(getValue(test,"threshold"));
+//		//System.out.println(getValue(test,"score"));
+//	}
 	private String getValue(String data, String attr)
 	{
 		try {
