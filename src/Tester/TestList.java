@@ -44,6 +44,5 @@ public class TestList {
         LearnProject.addData(path2,path3,false);
         LearnProject.addData(path3,path2,true);
         LearnProject.training(4,10);
-
     }
 }
