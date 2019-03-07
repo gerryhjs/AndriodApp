@@ -43,9 +43,11 @@ public abstract  class CompareFactory {
     private static final String path0="/media/hjs/KINGSTON/check/jsp-server";
     private static final String path1="/media/hjs/KINGSTON/check/jsp-lab";
 
-    private static final String exPath="/home/hjs/下载/";
-    private static final String graphVizPath="C:\\Users\\Saika\\Desktop\\output";
+    private static final String exPath="/home/hjs";
+    private static final String graphVizPath="/home/hjs";
     private static final String dotPath="C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
+
+    private static String[] dictionary;
 
     public static void init()
     {
@@ -59,6 +61,9 @@ public abstract  class CompareFactory {
         suffixList=new ArrayList<>();
         suffixList.add("java");
         threshold=0.6;
+        String s= FileStreamer.input(new File(dictionary_path));
+        if (s==null) dictionary= null;
+        dictionary=s.split(",");
     }
 
     public static String getGraphVizPath() {
@@ -115,7 +120,7 @@ public abstract  class CompareFactory {
         Diagram[] projects = new Diagram[projectSize];
         for (int i = 0; i < projectSize; i++) {
             if (createDiagram)
-                check_draw(paths[i]);
+                draw(paths[i]);
             projects[i] = check(paths[i]);
         }
 
@@ -133,7 +138,7 @@ public abstract  class CompareFactory {
         if (paths==null) return 0;
         for(String Scanner2:paths) {
             if (createDiagram)
-                check_draw(Scanner2);
+                draw(Scanner2);
             similar = Math.max(compare(path1, Scanner2),similar);
         }
         return similar;
@@ -157,7 +162,7 @@ public abstract  class CompareFactory {
         for(String Scanner1:paths1)
         {
             if (createDiagram) {
-                check_draw(Scanner1);
+                draw(Scanner1);
             }
 
             for(String Scanner2:paths2) {
@@ -338,7 +343,6 @@ public abstract  class CompareFactory {
       //  attrs.add("Similar");
 
         new ExStreamer("S:"+result+"["+m1.getName()+"-"+m2.getName()+"].xls").excelOut(v1.size(),attrs,values);
-
         return result;
     }
     private static Diagram check(String path) {
@@ -395,7 +399,7 @@ public abstract  class CompareFactory {
     }
 
 
-    private static void check_draw(String path) {
+    public static void draw(String path) {
 
         ArrayList<String> Edges=new ArrayList<>();
       //  ArrayList<String> Edges2=new ArrayList<>();
@@ -417,6 +421,7 @@ public abstract  class CompareFactory {
                 int times=scanFolder(Scanner, code, Scanner2);
                 if (times>0) {
                     double weight=dis(times);//权重 1-1.25
+                    weight=(double) Math.round(weight * 10000) / 10000;
                     Edges.add("\"" + Scanner.getFileName() + "\"" + "->" +
                             "\"" + Scanner2.getFileName() + "\"" + " " +
                             "[label=\"" + weight + "\"]");
@@ -483,10 +488,9 @@ public abstract  class CompareFactory {
     }
 
     public static String[] getDictionary() {
-        String s= FileStreamer.input(new File(dictionary_path));
+
         //System.out.println(s);
-        if (s==null) return null;
-        return s.split(",");
+        return dictionary;
     }
 
 //

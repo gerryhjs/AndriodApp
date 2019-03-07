@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 class  GraphViz{
-    private String runPath = "";
+    private String runPath;
     private String dotPath = "";
     private String runOrder= "";
     private String dotCodeFile="dotcode.txt";
@@ -30,7 +30,8 @@ class  GraphViz{
         try {
             runtime.exec(runOrder);
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            System.out.println(e.toString());
         }
     }
 
@@ -49,7 +50,12 @@ class  GraphViz{
         try {
             File file = new File(filename+"\\"+dotCodeFile);
             if(!file.exists()){
-                file.createNewFile();
+                try {
+                    file.createNewFile();
+                }catch (Exception e)
+                {
+                    System.out.println(e.toString());
+                }
             }
             FileOutputStream fos = new FileOutputStream(file);
            // OutputStreamWriter op = new OutputStreamWriter(newFileOutputStream(file), "utf-8");
@@ -83,6 +89,7 @@ class  GraphViz{
 
     public void end_graph() {
         graph.append("}") ;
+        System.out.println(graph);
     }
 
     public void delete() {

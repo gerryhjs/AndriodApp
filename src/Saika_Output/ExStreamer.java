@@ -1,7 +1,6 @@
 package Saika_Output;
 
 
-import jxl.Sheet;
 import jxl.Workbook;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
@@ -12,7 +11,6 @@ import main.CompareFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class ExStreamer {
@@ -20,97 +18,99 @@ public class ExStreamer {
     //TODO 修改自定义比较结果输出
     private ArrayList<String> attr=new ArrayList<>();
     private String path=CompareFactory.getExPath();
-    private String filePath;
     public ExStreamer(String filename)
     {
-        this.filePath=path+filename;
+        if (path.endsWith(File.separator))
+            this.path=path+filename;
+        else
+            this.path=path+File.separator+filename;
     }
 
 //    public ExStreamer(String path) {
 //        this.path=path;
 //    }
 
-    public void addAttr(String newAttr)
-    {
-        attr.add(newAttr);
-    }
-    public void excelOut(List<ExObject> list)
-    {
-        WritableWorkbook book = null;
-        try
-        {
-            book = Workbook.createWorkbook(new File(filePath));
-            WritableSheet sheet = book.createSheet("sheet1", 0);
-            // Label label = new Label(0, 2, "test")
-            for (int j=0;j<attr.size();j++)
-            {
-                Label l=new Label(j,0,attr.get(j));
-                sheet.addCell(l);
-            }
-            for (int i = 0; i < list.size(); i++) {
-                ExObject exObject = list.get(i);
-                for (int j=0;j<attr.size();j++)
-                {
-                    Label l=new Label(j,i+1,exObject.getval(j));
-                    sheet.addCell(l);
-                }
+//    public void addAttr(String newAttr)
+//    {
+//        attr.add(newAttr);
+//    }
+//    public void excelOut(List<ExObject> list)
+//    {
+//        WritableWorkbook book = null;
+//        try
+//        {
+//            book = Workbook.createWorkbook(new File(path));
+//            WritableSheet sheet = book.createSheet("sheet1", 0);
+//            // Label label = new Label(0, 2, "test")
+//            for (int j=0;j<attr.size();j++)
+//            {
+//                Label l=new Label(j,0,attr.get(j));
+//                sheet.addCell(l);
+//            }
+//            for (int i = 0; i < list.size(); i++) {
+//                ExObject exObject = list.get(i);
+//                for (int j=0;j<attr.size();j++)
+//                {
+//                    Label l=new Label(j,i+1,exObject.getval(j));
+//                    sheet.addCell(l);
+//                }
+//
+//            }
+//            book.write();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                book.close();
+//            } catch (WriteException | IOException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
-            }
-            book.write();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                book.close();
-            } catch (WriteException | IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public List<ExObject> excelIn(String db, String tableName, Boolean replace) {
-        List<ExObject> list = new ArrayList<>();
-        Workbook workbook = null;
-        try {
-            workbook = Workbook.getWorkbook(new File(filePath));
-            Sheet sheet = workbook.getSheet(0);
-            for (int i = 0; i < sheet.getRows(); i++) {
-                ExObject exObject = new ExObject();
-               // Cell cell0 = sheet.getCell(0, i);
-                for(int j=0;j<=100;j++)
-                {
-                    try {
-                        String txt = sheet.getCell(j, i).getContents();
-                        //System.out.println(i + "_" + j + ":" + txt);
-                        //if (txt.length()==0) continue;
-                    }
-                    catch (Exception ignored)
-                    {
-
-                    }
-                }
-
-                list.add(exObject);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            assert workbook != null;
-            workbook.close();
-        }
-        return list;
-    }
+//    public List<ExObject> excelIn(String db, String tableName, Boolean replace) {
+//        List<ExObject> list = new ArrayList<>();
+//        Workbook workbook = null;
+//        try {
+//            workbook = Workbook.getWorkbook(new File(path));
+//            Sheet sheet = workbook.getSheet(0);
+//            for (int i = 0; i < sheet.getRows(); i++) {
+//                ExObject exObject = new ExObject();
+//               // Cell cell0 = sheet.getCell(0, i);
+//                for(int j=0;j<=100;j++)
+//                {
+//                    try {
+////                        String txt = sheet.getCell(j, i).getContents();
+//                        //System.out.println(i + "_" + j + ":" + txt);
+//                        //if (txt.length()==0) continue;
+//                    }
+//                    catch (Exception ignored)
+//                    {
+//
+//                    }
+//                }
+//
+//                list.add(exObject);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            assert workbook != null;
+//            workbook.close();
+//        }
+//        return list;
+//    }
 
 
 //    public  void main(String args[])
 //    {
 //        test();
 //    }
-    public  void test()
-    {
-        excelIn("bigdata","user",true);
-    }
+//    public  void test()
+//    {
+//        excelIn("bigdata","user",true);
+//    }
 
     private void setAttrs(ArrayList<String> attrs) {
         this.attr = attrs;
@@ -136,6 +136,7 @@ public class ExStreamer {
         try
         {
             f=new File(path);
+            System.out.println(path);
             book = Workbook.createWorkbook(f);
             WritableSheet sheet = book.createSheet("sheet1", 0);
             // Label label = new Label(0, 2, "test")

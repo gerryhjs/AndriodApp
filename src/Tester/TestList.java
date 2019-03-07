@@ -4,13 +4,22 @@ import MechineLearning.LearnProject;
 import main.CompareFactory;
 import org.junit.Test;
 
+import java.io.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
 public class TestList {
 
+    @Test
+    public void draw_test()
+    {
+        CompareFactory.init();
+        CompareFactory.draw("/home/hjs/code_compare");
+    }
     @Test
     public void Factory_test()
     {
         CompareFactory.init();
-        CompareFactory.createDiagram=false;
         System.out.println(CompareFactory.test_compare2());
     }
     /*
@@ -45,4 +54,11 @@ public class TestList {
         LearnProject.addData(path3,path2,true);
         LearnProject.training(4,10);
     }
+    private String zipFileName;      // 目的地Zip文件
+    private String sourceFileName;   //源文件（带压缩的文件或文件夹）
+
+
+
+
+
 }
