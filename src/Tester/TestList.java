@@ -20,7 +20,8 @@ public class TestList {
     public void Factory_test()
     {
         CompareFactory.init();
-        System.out.println(CompareFactory.test_compare2());
+        CompareFactory.createXls=true;
+        System.out.println(CompareFactory.compare("/media/hjs/KINGSTON/check/jsp-lab","/home/hjs/bms"));
     }
     /*
         private final double edge_weight_limit1=0.2;
@@ -49,10 +50,9 @@ public class TestList {
         LearnProject.init();
         LearnProject.addData(path0,path1,true);
         LearnProject.addData(path1,path0,false);
-        LearnProject.addData(path0,path2,false);
-        LearnProject.addData(path2,path3,false);
-        LearnProject.addData(path3,path2,true);
-        LearnProject.training(4,10);
+//        LearnProject.addData(path2,path3,false);
+//        LearnProject.addData(path3,path2,true);
+        LearnProject.training(3,20);
     }
     private String zipFileName;      // 目的地Zip文件
     private String sourceFileName;   //源文件（带压缩的文件或文件夹）

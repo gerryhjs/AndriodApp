@@ -1,6 +1,7 @@
 package compare_core;
 
 import file_core.CodeFile;
+import main.CompareFactory;
 
 public abstract class CodeCompare {
 //    private  String[] codes1;
@@ -57,24 +58,28 @@ public abstract class CodeCompare {
             if (Scanner.length() > 0) {
                 index++;
                 double similar = 0;
+                String ans=Scanner+">";
                 for (String Scanner2 : codes2) {
                     if (Scanner2.length() > 0) {
                         double temp = StringCompare.work(Scanner, Scanner2);
-                        ////System.out.println(Scanner + "<->" + Scanner2 + ":"+ temp);
+                        ////if (CompareFactory. print_enable)  System.out.println(Scanner + "<->" + Scanner2 + ":"+ temp);
                         if (temp > 1) temp = 1;
-                        temp = Math.pow(temp, 1);
+//                        temp = Math.pow(temp, 1);
                         //  similar = Math.max(similar, temp);
                         if (temp > similar) {
+                            ans=Scanner+"\n"+Scanner2+"\n";
                             similar = temp;
                         }
                     }
                 }
-                ////System.out.println(ans+":"+similar);
-                ////System.out.println(similar);
-                sum += similar;
+//                if (CompareFactory. print_enable)  System.out.println(ans+"Similar:"+ CompareFactory.df.format(similar*100)+"%");
+                if (similar==0) index--;
+                ////if (CompareFactory. print_enable)  System.out.println(similar);
+                if(similar>=CompareFactory.min_threshold)
+                    sum += similar;
             }
         if (index==0) index=1;
-        ////System.out.println("S_"+sum+"_"+index);
+        ////if (CompareFactory. print_enable)  System.out.println("S_"+sum+"_"+index);
         return sum/index;
     }
 

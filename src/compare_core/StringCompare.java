@@ -30,7 +30,7 @@ public abstract class StringCompare {
 //                }
 //            }
 ////            for (int i=0;i<keys.size();i++) {
-////                //System.out.println(keys.get(i)+":"+index[i]);
+////                //if (CompareFactory. print_enable)  System.out.println(keys.get(i)+":"+index[i]);
 ////            }
 //            for (int i = 0; i < s2.length(); i++) {
 //                int place = keys.indexOf(String.valueOf(s2.charAt(i)));
@@ -44,7 +44,7 @@ public abstract class StringCompare {
 //            }
 //            double diff = 0;
 //            for (int i = 0; i < keys.size(); i++) {
-//                ////System.out.println(keys.get(i) + ":" + index[i]);
+//                ////if (CompareFactory. print_enable)  System.out.println(keys.get(i) + ":" + index[i]);
 //                diff += Math.abs(index[i]);
 //            }
 //            return 1-(diff)/Math.max(s1.length(), s2.length());
@@ -67,6 +67,8 @@ public abstract class StringCompare {
                         temp = 1;
                     diff[i][j] = min(diff[i - 1][j] + 1, diff[i][j - 1] + 1, diff[i - 1][j - 1] + temp);
                 }
+//            if (CompareFactory. print_enable)  System.out.println("codeline"+s1);
+//            if (CompareFactory. print_enable)  System.out.println("target"+s1);
             return 1-(diff[s1.length()][s2.length()])/Math.min(s1.length(), s2.length());
             //return 1-(diff[s1.length()][s2.length()])/Math.min(s1.length(), s2.length());//-Math.abs(s1.length()-s2.length())
         }

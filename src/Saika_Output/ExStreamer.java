@@ -82,7 +82,7 @@ public class ExStreamer {
 //                {
 //                    try {
 ////                        String txt = sheet.getCell(j, i).getContents();
-//                        //System.out.println(i + "_" + j + ":" + txt);
+//                        //if (CompareFactory. print_enable) System.out.println(i + "_" + j + ":" + txt);
 //                        //if (txt.length()==0) continue;
 //                    }
 //                    catch (Exception ignored)
@@ -136,7 +136,6 @@ public class ExStreamer {
         try
         {
             f=new File(path);
-            System.out.println(path);
             book = Workbook.createWorkbook(f);
             WritableSheet sheet = book.createSheet("sheet1", 0);
             // Label label = new Label(0, 2, "test")
@@ -269,7 +268,7 @@ public class ExStreamer {
 //                    try {
 //                        String txt = sheet.getCell(j, i).getContents();
 //                        s.add(txt);
-//                        //System.out.println(i + "_" + j + ":" + txt);
+//                        //if (CompareFactory. print_enable) System.out.println(i + "_" + j + ":" + txt);
 //                        //if (txt.length()==0) continue;
 //                    }
 //                    catch (Exception ignored)

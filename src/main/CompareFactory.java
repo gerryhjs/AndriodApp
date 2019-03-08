@@ -10,10 +10,7 @@ import graphViz.GraphVizTest;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,22 +18,26 @@ import java.util.regex.Pattern;
  * Created by Saika on 2019/1/12.
  */
 public abstract  class CompareFactory {
-    private static DecimalFormat df = new DecimalFormat("#.00");
+    public static DecimalFormat df = new DecimalFormat("#.00");
 
     public static ArrayList<String> suffixList=new ArrayList<>();
+    public static boolean createXls=false;
     public static boolean createDiagram=false;
     public static boolean byLines=false;
     public static boolean bySize=false;
 
-    private static double adj_dis=1;
+
     public static double pow_dis=1;
-    public static double edge_weight =1;
+    public static double edge_weight =0.5;
     public static double check_threshold =0.6;
     public static double threshold=0.6;
+    public static double min_threshold=0.2;
 
 //    private static final boolean COMMENT=true;
+    private static double adj_dis=1;
     private static final double LOW_INDEX=1;
     private static final double BAS_DIS=1;
+
 
     private static final String dictionary_path="/home/hjs/code_compare/src/dictionary";
 //    private static final String target_path="/media/hjs/KINGSTON/check/";
@@ -46,21 +47,23 @@ public abstract  class CompareFactory {
     private static final String exPath="/home/hjs";
     private static final String graphVizPath="/home/hjs";
     private static final String dotPath="C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
+    public static boolean print_enable=true;
 
     private static String[] dictionary;
 
     public static void init()
     {
+        createXls=false;
         createDiagram=false;
         byLines=false;
         bySize=false;
         adj_dis=1;
         pow_dis=1;
-        edge_weight =1;
-        check_threshold =0.6;
+        edge_weight =0.5;
+        threshold=0.6;
+        check_threshold =0;
         suffixList=new ArrayList<>();
         suffixList.add("java");
-        threshold=0.6;
         String s= FileStreamer.input(new File(dictionary_path));
         if (s==null) dictionary= null;
         dictionary=s.split(",");
@@ -89,8 +92,8 @@ public abstract  class CompareFactory {
         paths[0]=path0;
         paths[1]=path1;
         double result = compare(paths[0], paths[1]);
-        ////System.out.println();
-        ////System.out.println("Result->" + df.format(result * 100) + "%");
+        ////if (CompareFactory. print_enable)  System.out.println();
+        ////if (CompareFactory. print_enable)  System.out.println("Result->" + df.format(result * 100) + "%");
         return (df.format(result * 100) + "%");
     }
 
@@ -180,38 +183,51 @@ public abstract  class CompareFactory {
     {
         //思路：匹配点 比较边权值  或者比较边后匹配点？
         // 得出结论 单向匹配z
-        Set<Vertex> v1=m1.getVertexList();
-        Set<Vertex> v2=m2.getVertexList();
+        Set<Vertex> v1=clone(m1.getVertexList());
+        Set<Vertex> v2=clone(m2.getVertexList());
+        //筛选
+        for (Vertex Scanner:m1.getVertexList())
+        {
+            if (!checkCode(Scanner)) v1.remove(Scanner);
+        }
         //匹配点
         Map<Vertex,Vertex> likely=new HashMap<>();
         double sumSimilar=0;
         int index=0;
         double weightIndex=0;
+        if (CompareFactory. print_enable) System.out.println("Scanning Vertex");
         String[][] values=new String[v1.size()+1][4];
         for (Vertex Scanner:v1)
         {
             index++;
 
+            if (CompareFactory. print_enable) System.out.println("Looking For->"+Scanner.info() +"====="+index+"/"+v1.size());
 
-            ////System.out.println("Looking For->"+Scanner.info() +"====="+index+"/"+v1.size());
             Vertex result=null;
+            Vertex like=null;
             double max_similar=0;
-
+            int index2=0;
             for (Vertex Scanner2:v2) {
+                index2++;
+                if (v2.size()>=10) if (CompareFactory. print_enable) System.out.println("Looking For->"+Scanner.info()+"==??=>"+Scanner2.info()+"====="+index2+"/"+v2.size());
                 double this_similar = Scanner.similar(Scanner2);
+                if (v2.size()>=10) if (CompareFactory. print_enable) System.out.println("Similar:"+df.format(this_similar * 100) + "%");
                 if (this_similar > max_similar) {
+                    like=Scanner2;
                     if (this_similar> check_threshold)
                     result = Scanner2;
                     max_similar = this_similar;
                     if (max_similar == 1) break;
                 }
             }
+            if (like!=null)
+            if (CompareFactory. print_enable) System.out.println("==>"+like.info()+df.format(max_similar * 100) + "%");
 //            if (result!=null) {
-//                ////System.out.println("Result:" + result.info() + "-" + df.format(max_similar * 100) + "%");
+//                ////if (CompareFactory. print_enable) System.out.println("Result:" + result.info() + "-" + df.format(max_similar * 100) + "%");
 //            }
 //            else
 //            {
-//                ////System.out.println("Result:NULL");
+//                ////if (CompareFactory. print_enable) System.out.println("Result:NULL");
 //            }
             likely.put(Scanner, result);
             values[index - 1][0] = Scanner.info();
@@ -238,20 +254,25 @@ public abstract  class CompareFactory {
         double similar1=sumSimilar/weightIndex;
         double sumSimilar2=0;
 
+        if (CompareFactory. print_enable) System.out.println("Scanning Edge");
         index=0;
         weightIndex=0;
         double max_similar2;
         for (Vertex Scanner:v1)
         {
             index++;
+            if (CompareFactory. print_enable) System.out.println("Looking For->"+Scanner.info() +"====="+(index+v1.size())+"/"+v1.size()*2);
+
             Vertex like=likely.get(Scanner);
+
 //            try {
-//                ////System.out.println(Scanner.info() + "=" + like.info());
+//                ////if (CompareFactory. print_enable) System.out.println(Scanner.info() + "=" + like.info());
 //            }catch (Exception ignored) {
 //
 //            }
             if (like!=null)
             {
+                if (CompareFactory. print_enable) System.out.println("Relate->"+like.info());
                 Set relates=Scanner.getTo();
                 double sum=0;
                 for (Object Scanner2:relates)
@@ -259,10 +280,17 @@ public abstract  class CompareFactory {
                     try {
                         double similar;
                         Vertex v = (Vertex) Scanner2;
+                        if (CompareFactory. print_enable) System.out.println("Relation1 ->"+v.info());
                         double distance1 = m1.getDistance(Scanner,v,LOW_INDEX);
+
                         Vertex like2 = likely.get(v);
+                        if (like2!=null)
+                            if (CompareFactory. print_enable) System.out.println("Relation2 ->"+like2.info());
+
                         double distance2=m2.getDistance(like,like2,LOW_INDEX);
-                        ////System.out.println(Scanner.info() +"_"+distance1+"_"+distance2);
+
+                       if (CompareFactory. print_enable) System.out.println("dis1:"+distance1+" dis2:"+distance2);
+
                         if (distance2==-1) similar=0;
                         else
                         {
@@ -275,14 +303,14 @@ public abstract  class CompareFactory {
 //                            if (diff<=sumDis*0.1+1) similar=0.8;
 //                            if (diff<=sumDis*0.03+1) similar=0.9;
 //                            if (diff<=sumDis*0.01+1) similar=1;
-                            ////System.out.println("S="+similar);
+                            ////if (CompareFactory. print_enable) System.out.println("S="+similar);
 
                         }
                         sum+=similar;//*(Scanner.similar(like));//+((Vertex)Scanner2).similar(like2)
 
                     }catch (Exception e)
                     {
-                        //System.out.println(e);
+                        //if (CompareFactory. print_enable) System.out.println(e);
                     }
                 }
 //                double edge_MaxS=1d;
@@ -292,7 +320,7 @@ public abstract  class CompareFactory {
                     else max_similar2=0;
 //                    if (max_similar>edge_MaxS)
 //                        max_similar=edge_MaxS;
-                    //System.out.println(max_similar2);
+                    //if (CompareFactory. print_enable) System.out.println(max_similar2);
                     values[index - 1][3] = df.format(max_similar2 * 100) + "%";
 
                     if (byLines)  weightIndex+=Scanner.getCf().getLines();
@@ -302,6 +330,7 @@ public abstract  class CompareFactory {
                     if (byLines) sumSimilar2+=Scanner.getCf().getLines()*max_similar2;
                     if (bySize) sumSimilar2+=Scanner.getCf().getSize()*max_similar2;
                     sumSimilar2+=max_similar2;
+                    if (CompareFactory. print_enable) System.out.println("Similar:"+max_similar2);
                 }
                 else
                 {
@@ -316,8 +345,8 @@ public abstract  class CompareFactory {
 //            }
         }
 
-       // //System.out.println(attrs.size());
-    //    //System.out.println(sumSimilar2+"_"+weightIndex);
+       // //if (CompareFactory. print_enable) System.out.println(attrs.size());
+    //    //if (CompareFactory. print_enable) System.out.println(sumSimilar2+"_"+weightIndex);
 
         double similar2;
         if (weightIndex<=0) weightIndex=1;
@@ -328,23 +357,40 @@ public abstract  class CompareFactory {
 
         if (similar2>1) similar2=1;
 
-        //System.out.println("SS:"+similar1+"-|-"+similar2);
-        double result=(similar1+similar2* edge_weight)/(1+ edge_weight);
+        //if (CompareFactory. print_enable) System.out.println("SS:"+similar1+"-|-"+similar2);
+
+        double adjust_edge=Math.tan(0.5*edge_weight*Math.PI);
+        double result=(similar1+similar2* adjust_edge)/(1+ adjust_edge);
 //        values[v1.size()][2]= String.valueOf(similar1);
 //        values[v1.size()][3]= String.valueOf(similar2);
 //        values[v1.size()][4]= String.valueOf(result);
 
         ArrayList<String> attrs=new ArrayList<>();
-        //System.out.println(similar1+"_"+similar2);
+        //if (CompareFactory. print_enable) System.out.println(similar1+"_"+similar2);
         attrs.add("origin");
         attrs.add("similar_target");
         attrs.add("vertex_Similar");
         attrs.add("edge_Similar");
       //  attrs.add("Similar");
-
-        new ExStreamer("S:"+result+"["+m1.getName()+"-"+m2.getName()+"].xls").excelOut(v1.size(),attrs,values);
+        if (createXls) {
+            String path= "[" + m1.getName() + "]==>[" + m2.getName() + "]"+"S:" + df.format(result*100) +"%.xls";
+            new ExStreamer(path).excelOut(v1.size(), attrs, values);
+        }
         return result;
     }
+
+    private static Set<Vertex> clone(Set<Vertex> vertexList) {
+        Set<Vertex> clone=new HashSet<>();
+        clone.addAll(vertexList);
+        return clone;
+    }
+
+    private static boolean checkCode(Vertex scanner) {
+        if (scanner.getCf().getSize()<=10) return false;
+        if (scanner.getCf().getLines()<=1) return false;
+        return true;
+    }
+
     private static Diagram check(String path) {
         String[] temp=path.split("/");
         String name=temp[temp.length-1];
@@ -370,17 +416,17 @@ public abstract  class CompareFactory {
         }
         for (CodeFile Scanner:FolderScanner.getCodeFiles()) {
 //            String nowPackage=Scanner.getPackageName();
-            //System.out.println("["+nowPackage+"]"+Scanner.getFileName());
+            //if (CompareFactory. print_enable) System.out.println("["+nowPackage+"]"+Scanner.getFileName());
             String code=Scanner.getCode();
             for (CodeFile Scanner2:FolderScanner.getCodeFiles()) {
                 int times= scanFolder(Scanner, code, Scanner2);
                 if (times>0) {
                     double weight=dis(times);//距离权重 1-1.25
                     m.getVertex(Scanner.getFileName()).Relate(m.getVertex(Scanner2.getFileName()),weight);
-               //     //System.out.println("MS"+m.getVertex(Scanner.getFileName()).getTo().size());
+               //     //if (CompareFactory. print_enable) System.out.println("MS"+m.getVertex(Scanner.getFileName()).getTo().size());
                 }
             }
-            //System.out.println();
+            //if (CompareFactory. print_enable) System.out.println();
         }
         return m;
 
@@ -415,22 +461,21 @@ public abstract  class CompareFactory {
         }
         for (CodeFile Scanner:FolderScanner.getCodeFiles()) {
 //            String nowPackage=Scanner.getPackageName();
-            //System.out.println("["+nowPackage+"]"+Scanner.getFileName());
+            //if (CompareFactory. print_enable) System.out.println("["+nowPackage+"]"+Scanner.getFileName());
             String code=Scanner.getCode();
             for (CodeFile Scanner2:FolderScanner.getCodeFiles()) {
                 int times=scanFolder(Scanner, code, Scanner2);
                 if (times>0) {
                     double weight=dis(times);//权重 1-1.25
-                    weight=(double) Math.round(weight * 10000) / 10000;
                     Edges.add("\"" + Scanner.getFileName() + "\"" + "->" +
                             "\"" + Scanner2.getFileName() + "\"" + " " +
-                            "[label=\"" + weight + "\"]");
+                            "[label=\"" + df.format(weight) + "\"]");
 //                    Edges2.add("\"" + Scanner.getFileName() + "\"" + "->" +
 //                            "\"" + Scanner2.getFileName() + "\"" + " " +
 //                            "[label=\"" + type + "\"]");
                 }
             }
-            //System.out.println();
+            //if (CompareFactory. print_enable) System.out.println();
         }
 
 
@@ -489,7 +534,7 @@ public abstract  class CompareFactory {
 
     public static String[] getDictionary() {
 
-        //System.out.println(s);
+        //if (CompareFactory. print_enable) System.out.println(s);
         return dictionary;
     }
 

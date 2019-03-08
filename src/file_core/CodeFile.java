@@ -194,6 +194,7 @@ public class CodeFile {
     {
         s=s.replace("  ","*");
         s=s.replace("\t","*");
+        s=s.replaceAll("^\\s*\\n","*");
         return s;
         //  s=s.replace("---","*");
     }
