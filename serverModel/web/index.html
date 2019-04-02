@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>人工智能（zhang）机器人</title>
+</head>
+<script src="js/jquery-1.11.0.min.js"></script>
+<script>
+    function  send() {
+
+        var input=$('#input').val();
+        $("#send").attr("disable",true);
+        $.post('Servlet', {input: input}, function (output, status, xhr) {
+            // $("#input").val("");
+            $("#output").val(output);
+            $("#send").attr("disable",false);
+        });
+
+        // var input=document.getElementById("input").value;
+        // var key=input.replace("你", "").replace("我", "你").replace("么", "")
+        //     .replace("吗", "").replace("呢", "").replace("？", "").replace("?", "");
+        // var asc=0;
+        // for (var i=0;i<key.length;i++)
+        // {
+        //     asc+=key.charCodeAt(i);
+        // }
+        // var reply;
+        // if (asc% 2 ===0)
+        //     reply="我"+ key +"。";
+        // else
+        //     reply="我不"+ key +"。";
+        // setTimeout(document.getElementById("output").value=reply,3000);
+
+    }
+
+
+</script>
+<body>
+<div>
+<label>问题：
+    <input id="input" type="text" placeholder="如：你喜欢吃辣条吗？">
+</label>
+<input type="button" id="send" onclick="send()" value="发送">
+</div>
+<div>
+<label>回答：
+    <input id="output" disabled type="text">
+</label>
+</div>
+</body>
+</html>
