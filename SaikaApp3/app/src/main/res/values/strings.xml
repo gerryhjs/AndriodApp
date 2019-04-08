@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">一个程序</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="myName">Saika</string>
+    <string name="myEmail">396537452@qq.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">设置</string>
+    <string name="about">关于作者</string>
+    <string name="about_title">蝉声陪伴着行云流浪,回忆的远方</string>
+    <string name="help">需要帮助？</string>
+
+    <string name="info_detail">作者：hjs 时间：2019年4月3日 背景图from：海上花园-鼓浪屿 安卓项目练手 ver:1.0.1(for幽专属) 编译工具：Android studio+idea 调用api：tuling Robot
+    </string>
+    <string name="help_detail">这个东西是一个程序猿无聊的时候随便写来练练手的，点主界面的小图标，开始聊天。</string>
+    <string name="main_text">hhh</string>
+</resources>
